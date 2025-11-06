@@ -1,16 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fatec.poo.model;
 
 /**
- *
- * @author isaque
- * @author Classe Pessoa: Victor Leonardo
+ * 
+ * @author Victor Leonardo
+ * 
  */
-public abstract class Pessoa {
+public class Pessoa {
 
     private String cpf;
     private String nome;
