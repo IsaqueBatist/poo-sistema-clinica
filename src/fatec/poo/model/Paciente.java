@@ -1,5 +1,6 @@
 package fatec.poo.model;
 
+
 /**
  *
  * @author Victor Leonardo
@@ -16,13 +17,13 @@ public class Paciente extends Pessoa {
     private double altura;
     private double peso;
  
+    // private ArrayList<Consulta> consultas = new ArrayList<Consulta>();
     
     public Paciente(String cpf, String nome, LocalDate dataNascimento){
-        super(cpf, nome); // Chamada do método construtor da superclasse
+        super(cpf, nome); 
         this.dataNascimento = dataNascimento;
     }
 
-    // Getter DataNascimento formatada no padrão dia/mês/ano
     public String getDataNascimento(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return dataNascimento.format(formatter);
@@ -44,17 +45,22 @@ public class Paciente extends Pessoa {
         this.peso = peso;
     }
 
-    // Método para calcular o IMC
+    
     public double calcIMC(){
-        if (altura > 0){
-            return peso / (altura * altura);
-        }
-        return 0;
+        return peso / Math.pow(altura, 2);
     }
-
-    // Método para calcular idade usando a data informada pelo LocalDate
+    
     public int calcIdade(LocalDate dataAtual) {
         return Period.between(dataNascimento, dataAtual).getYears();
     }
     
+    /*
+    public void addConsulta(Consulta consulta){
+        this.consultas.add(consulta);
+    }
+    
+    public ArrayList<Consulta> getConsultas(){
+        return this.consultas;
+    }
+    */
 }
