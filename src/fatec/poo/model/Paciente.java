@@ -1,6 +1,5 @@
 package fatec.poo.model;
 
-
 /**
  *
  * @author Victor Leonardo
@@ -10,23 +9,27 @@ package fatec.poo.model;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Paciente extends Pessoa {
     
     private LocalDate dataNascimento;
     private double altura;
     private double peso;
- 
-    // private ArrayList<Consulta> consultas = new ArrayList<Consulta>();
+ // private List<Consulta> consultas;
     
     public Paciente(String cpf, String nome, LocalDate dataNascimento){
         super(cpf, nome); 
         this.dataNascimento = dataNascimento;
+     // this.consultas = new ArrayList<>();
     }
 
     public String getDataNascimento(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return dataNascimento.format(formatter);
+        DateTimeFormatter formatador = DateTimeFormatter.ofPattern
+        ("dd/MM/yyyy");
+        return dataNascimento.format(formatador);
     }
 
     public double getAltura(){
