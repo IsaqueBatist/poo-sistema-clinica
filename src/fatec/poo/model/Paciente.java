@@ -18,12 +18,12 @@ public class Paciente extends Pessoa {
     private LocalDate dataNascimento;
     private double altura;
     private double peso;
- // private List<Consulta> consultas;
+    private ArrayList<Consulta> consultas;
     
     public Paciente(String cpf, String nome, LocalDate dataNascimento){
         super(cpf, nome); 
         this.dataNascimento = dataNascimento;
-     // this.consultas = new ArrayList<>();
+        this.consultas = new ArrayList<>();
     }
 
     public String getDataNascimento(){
@@ -57,13 +57,12 @@ public class Paciente extends Pessoa {
         return Period.between(dataNascimento, dataAtual).getYears();
     }
     
-    /*
     public void addConsulta(Consulta consulta){
         this.consultas.add(consulta);
+        consulta.addExame(this);
     }
     
     public ArrayList<Consulta> getConsultas(){
-        return this.consultas;
+        return consultas;
     }
-    */
 }

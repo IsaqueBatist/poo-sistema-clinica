@@ -5,14 +5,15 @@ package fatec.poo.model;
  * @author isaqu
  */
 public class Exame {
+
     private int codigo;
     private String descricao;
     private String data;
     private String horario;
     private Double valor;
-    // private Consulta consulta;
-    
-    public Exame(int codigo, String descricao){
+    private Consulta consulta;
+
+    public Exame(int codigo, String descricao) {
         this.codigo = codigo;
         this.descricao = descricao;
     }
@@ -36,10 +37,10 @@ public class Exame {
     public Double getValor() {
         return valor;
     }
-    
-//    public Consulta getConsulta(){
-//        return this.consulta;
-//    }
+
+    public Consulta getConsulta() {
+        return this.consulta;
+    }
 
     public void setData(String data) {
         this.data = data;
@@ -52,9 +53,10 @@ public class Exame {
     public void setValor(Double valor) {
         this.valor = valor;
     }
-    
-//    public void setConsulta(Consulta consulta) {;
-//        this.consulta = consulta;
-//    }
-    
+
+    public void setConsulta(Consulta consulta) {;
+        this.consulta = consulta;
+        consulta.addExame(this);
+    }
+
 }
