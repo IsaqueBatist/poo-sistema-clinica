@@ -54,7 +54,7 @@ public class Exame {
         this.valor = valor;
     }
 
-    public void setConsulta(Consulta consulta) {;
+    public void setConsulta(Consulta consulta) {
         this.consulta = consulta;
         consulta.addExame(this);
     }

@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class Paciente extends Pessoa {
@@ -59,10 +58,9 @@ public class Paciente extends Pessoa {
     
     public void addConsulta(Consulta consulta){
         this.consultas.add(consulta);
-        consulta.addExame(this);
     }
     
     public ArrayList<Consulta> getConsultas(){
-        return consultas;
+        return this.consultas;
     }
 }
