@@ -41,7 +41,6 @@ public class Consulta {
 
     public void setMedico(Medico medico) {
         this.medico = medico;
-        medico.addConsulta(this);
     }
     
     public void addMedicacao(Medicacao medicacao){
