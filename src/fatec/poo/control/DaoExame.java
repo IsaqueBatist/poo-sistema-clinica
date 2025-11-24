@@ -16,13 +16,10 @@ public class DaoExame {
     }
 
     public void inserir(Exame exame) {
-        PreparedStatement ps = null;
-
-        try {
-            ps = conn.prepareStatement(
-                "INSERT INTO tbExame (codigo, descricao, data, horario, valor, codConsulta) " +
-                "VALUES (?, ?, ?, ?, ?, ?)"
-            );
+        try (PreparedStatement ps = conn.prepareStatement(
+                "INSERT INTO tblExame (codigo, descricao, data, horario, valor, codConsulta) "
+                + "VALUES (?, ?, ?, ?, ?, ?)"
+        )) {
 
             ps.setInt(1, exame.getCodigo());
             ps.setString(2, exame.getDescricao());
@@ -38,13 +35,10 @@ public class DaoExame {
     }
 
     public void alterar(Exame exame) {
-        PreparedStatement ps = null;
-
-        try {
-            ps = conn.prepareStatement(
-                "UPDATE tbExame SET descricao = ?, data = ?, horario = ?, valor = ?, codConsulta = ? " +
-                "WHERE codigo = ?"
-            );
+        try (PreparedStatement ps = conn.prepareStatement(
+                "UPDATE tblExame SET descricao = ?, data = ?, horario = ?, valor = ?, codConsulta = ? "
+                + "WHERE codigo = ?"
+        )) {
 
             ps.setString(1, exame.getDescricao());
             ps.setString(2, exame.getData());
@@ -62,28 +56,25 @@ public class DaoExame {
 
     public Exame consultar(int codigo) {
         Exame exame = null;
-        PreparedStatement ps;
-        ResultSet rs;
 
-        try {
-            ps = conn.prepareStatement(
-                "SELECT * FROM tbExame WHERE codigo = ?"
-            );
+        try (PreparedStatement ps = conn.prepareStatement(
+                "SELECT * FROM tblExame WHERE codigo = ?"
+        )) {
 
             ps.setInt(1, codigo);
-            rs = ps.executeQuery();
+            try (ResultSet rs = ps.executeQuery()) {
 
-            if (rs.next()) {
-                exame = new Exame(
-                    rs.getInt("codigo"),
-                    rs.getString("descricao")
-                );
+                if (rs.next()) {
+                    exame = new Exame(
+                            rs.getInt("codigo"),
+                            rs.getString("descricao")
+                    );
 
-                exame.setData(rs.getString("data"));
-                exame.setHorario(rs.getString("horario"));
-                exame.setValor(rs.getDouble("valor"));
+                    exame.setData(rs.getString("data"));
+                    exame.setHorario(rs.getString("horario"));
+                    exame.setValor(rs.getDouble("valor"));
+                }
             }
-
         } catch (SQLException ex) {
             System.out.println("Erro ao consultar exame: " + ex.toString());
         }
@@ -92,12 +83,9 @@ public class DaoExame {
     }
 
     public void excluir(Exame exame) {
-        PreparedStatement ps = null;
-
-        try {
-            ps = conn.prepareStatement(
-                "DELETE FROM tbExame WHERE codigo = ?"
-            );
+        try (PreparedStatement ps = conn.prepareStatement(
+                "DELETE FROM tblExame WHERE codigo = ?"
+        )) {
 
             ps.setInt(1, exame.getCodigo());
             ps.executeUpdate();
@@ -109,29 +97,26 @@ public class DaoExame {
 
     public ArrayList<Exame> consultarExames() {
         ArrayList<Exame> lista = new ArrayList<>();
-        PreparedStatement ps;
-        ResultSet rs;
 
-        try {
-            ps = conn.prepareStatement(
-                "SELECT * FROM tbExame ORDER BY descricao"
-            );
+        try (PreparedStatement ps = conn.prepareStatement(
+                "SELECT * FROM tblExame ORDER BY descricao"
+        )) {
 
-            rs = ps.executeQuery();
+            try (ResultSet rs = ps.executeQuery()) {
 
-            while (rs.next()) {
-                Exame exame = new Exame(
-                    rs.getInt("codigo"),
-                    rs.getString("descricao")
-                );
+                while (rs.next()) {
+                    Exame exame = new Exame(
+                            rs.getInt("codigo"),
+                            rs.getString("descricao")
+                    );
 
-                exame.setData(rs.getString("data"));
-                exame.setHorario(rs.getString("horario"));
-                exame.setValor(rs.getDouble("valor"));
+                    exame.setData(rs.getString("data"));
+                    exame.setHorario(rs.getString("horario"));
+                    exame.setValor(rs.getDouble("valor"));
 
-                lista.add(exame);
+                    lista.add(exame);
+                }
             }
-
         } catch (SQLException ex) {
             System.out.println("Erro ao consultar exames: " + ex.toString());
         }

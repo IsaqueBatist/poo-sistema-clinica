@@ -16,13 +16,10 @@ public class DaoMedicacao {
     }
 
     public void inserir(Medicacao medicacao, int codConsulta) {
-        PreparedStatement ps;
-
-        try {
-            ps = conn.prepareStatement(
-                "INSERT INTO tbMedicacao (nome, dosagem, qtdeDias, codConsulta) " +
-                "VALUES (?, ?, ?, ?)"
-            );
+        try (PreparedStatement ps = conn.prepareStatement(
+                "INSERT INTO tblMedicacao (nome, dosagem, qtdeDias, codConsulta) "
+                + "VALUES (?, ?, ?, ?)"
+        )) {
 
             ps.setString(1, medicacao.getNome());
             ps.setString(2, medicacao.getDosagem());
@@ -30,20 +27,17 @@ public class DaoMedicacao {
             ps.setInt(4, codConsulta);
 
             ps.execute();
-
         } catch (SQLException ex) {
             System.out.println("Erro ao inserir medicacao: " + ex.toString());
         }
     }
 
     public void alterar(int idMedicacao, Medicacao medicacao, int codConsulta) {
-        PreparedStatement ps;
 
-        try {
-            ps = conn.prepareStatement(
-                "UPDATE tbMedicacao SET nome = ?, dosagem = ?, qtdeDias = ?, codConsulta = ? " +
-                "WHERE idMedicacao = ?"
-            );
+        try (PreparedStatement ps = conn.prepareStatement(
+                "UPDATE tblMedicacao SET nome = ?, dosagem = ?, qtdeDias = ?, codConsulta = ? "
+                + "WHERE idMedicacao = ?"
+        )) {
 
             ps.setString(1, medicacao.getNome());
             ps.setString(2, medicacao.getDosagem());
@@ -60,23 +54,20 @@ public class DaoMedicacao {
 
     public Medicacao consultar(int idMedicacao) {
         Medicacao medicacao = null;
-        PreparedStatement ps;
-        ResultSet rs;
 
-        try {
-            ps = conn.prepareStatement(
-                "SELECT * FROM tbMedicacao WHERE idMedicacao = ?"
-            );
+        try (PreparedStatement ps = conn.prepareStatement(
+                "SELECT * FROM tblMedicacao WHERE idMedicacao = ?"
+        )) {
 
             ps.setInt(1, idMedicacao);
-            rs = ps.executeQuery();
+            try (ResultSet rs = ps.executeQuery()) {
 
-            if (rs.next()) {
-                medicacao = new Medicacao(rs.getString("nome"));
-                medicacao.setDosagem(rs.getString("dosagem"));
-                medicacao.setQtdeDias(rs.getInt("qtdeDias"));
+                if (rs.next()) {
+                    medicacao = new Medicacao(rs.getString("nome"));
+                    medicacao.setDosagem(rs.getString("dosagem"));
+                    medicacao.setQtdeDias(rs.getInt("qtdeDias"));
+                }
             }
-
         } catch (SQLException ex) {
             System.out.println("Erro ao consultar medicacao: " + ex.toString());
         }
@@ -85,12 +76,9 @@ public class DaoMedicacao {
     }
 
     public void excluir(int idMedicacao) {
-        PreparedStatement ps;
-
-        try {
-            ps = conn.prepareStatement(
-                "DELETE FROM tbMedicacao WHERE idMedicacao = ?"
-            );
+        try (PreparedStatement ps = conn.prepareStatement(
+                "DELETE FROM tblMedicacao WHERE idMedicacao = ?"
+        )) {
 
             ps.setInt(1, idMedicacao);
             ps.execute();
@@ -102,23 +90,20 @@ public class DaoMedicacao {
 
     public ArrayList<Medicacao> listar() {
         ArrayList<Medicacao> lista = new ArrayList<>();
-        PreparedStatement ps;
-        ResultSet rs;
 
-        try {
-            ps = conn.prepareStatement(
-                "SELECT * FROM tbMedicacao ORDER BY nome"
-            );
+        try (PreparedStatement ps = conn.prepareStatement(
+                "SELECT * FROM tblMedicacao ORDER BY nome"
+        )) {
 
-            rs = ps.executeQuery();
+            try (ResultSet rs = ps.executeQuery()) {
 
-            while (rs.next()) {
-                Medicacao medicacao = new Medicacao(rs.getString("nome"));
-                medicacao.setDosagem(rs.getString("dosagem"));
-                medicacao.setQtdeDias(rs.getInt("qtdeDias"));
-                lista.add(medicacao);
+                while (rs.next()) {
+                    Medicacao medicacao = new Medicacao(rs.getString("nome"));
+                    medicacao.setDosagem(rs.getString("dosagem"));
+                    medicacao.setQtdeDias(rs.getInt("qtdeDias"));
+                    lista.add(medicacao);
+                }
             }
-
         } catch (SQLException ex) {
             System.out.println("Erro ao listar medicacoes: " + ex.toString());
         }
