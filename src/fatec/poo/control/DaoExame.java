@@ -1,5 +1,6 @@
 package fatec.poo.control;
 
+import fatec.poo.model.Consulta;
 import fatec.poo.model.Exame;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,10 +17,8 @@ public class DaoExame {
     }
 
     public void inserir(Exame exame) {
-        try (PreparedStatement ps = conn.prepareStatement(
-                "INSERT INTO tblExame (codigo, descricao, data, horario, valor, codConsulta) "
-                + "VALUES (?, ?, ?, ?, ?, ?)"
-        )) {
+        try {
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO tblExame (codigo, descricao, data, horario, valor, codigo_consulta) VALUES (?, ?, ?, ?, ?, ?)");
 
             ps.setInt(1, exame.getCodigo());
             ps.setString(2, exame.getDescricao());
@@ -29,16 +28,15 @@ public class DaoExame {
             ps.setInt(6, exame.getConsulta().getCodigo());
 
             ps.executeUpdate();
+            ps.close();
         } catch (SQLException ex) {
             System.out.println("Erro ao inserir exame: " + ex.toString());
         }
     }
 
     public void alterar(Exame exame) {
-        try (PreparedStatement ps = conn.prepareStatement(
-                "UPDATE tblExame SET descricao = ?, data = ?, horario = ?, valor = ?, codConsulta = ? "
-                + "WHERE codigo = ?"
-        )) {
+        try {
+            PreparedStatement ps = conn.prepareStatement("UPDATE tblExame SET descricao = ?, data = ?, horario = ?, valor = ?, codigo_consulta = ? WHERE codigo = ?");
 
             ps.setString(1, exame.getDescricao());
             ps.setString(2, exame.getData());
@@ -48,6 +46,7 @@ public class DaoExame {
             ps.setInt(6, exame.getCodigo());
 
             ps.executeUpdate();
+            ps.close();
 
         } catch (SQLException ex) {
             System.out.println("Erro ao alterar exame: " + ex.toString());
@@ -57,24 +56,31 @@ public class DaoExame {
     public Exame consultar(int codigo) {
         Exame exame = null;
 
-        try (PreparedStatement ps = conn.prepareStatement(
-                "SELECT * FROM tblExame WHERE codigo = ?"
-        )) {
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM tblExame WHERE codigo = ?");
 
             ps.setInt(1, codigo);
-            try (ResultSet rs = ps.executeQuery()) {
+            try {
+                ResultSet rs = ps.executeQuery();
 
                 if (rs.next()) {
                     exame = new Exame(
                             rs.getInt("codigo"),
                             rs.getString("descricao")
                     );
-
+                    
+                    Consulta consulta = new DaoConsulta(conn).consultar(rs.getInt("codigo_consulta"));
+                    
+                    exame.setConsulta(consulta);
                     exame.setData(rs.getString("data"));
                     exame.setHorario(rs.getString("horario"));
                     exame.setValor(rs.getDouble("valor"));
                 }
+                rs.close();
+            } catch (SQLException ex) {
+                 System.out.println("Erro ao consultar exame: " + ex.toString());
             }
+            ps.close();
         } catch (SQLException ex) {
             System.out.println("Erro ao consultar exame: " + ex.toString());
         }
@@ -83,12 +89,12 @@ public class DaoExame {
     }
 
     public void excluir(Exame exame) {
-        try (PreparedStatement ps = conn.prepareStatement(
-                "DELETE FROM tblExame WHERE codigo = ?"
-        )) {
+        try {
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM tblExame WHERE codigo = ?");
 
             ps.setInt(1, exame.getCodigo());
             ps.executeUpdate();
+            ps.close();
 
         } catch (SQLException ex) {
             System.out.println("Erro ao excluir exame: " + ex.toString());
@@ -98,11 +104,11 @@ public class DaoExame {
     public ArrayList<Exame> consultarExames() {
         ArrayList<Exame> lista = new ArrayList<>();
 
-        try (PreparedStatement ps = conn.prepareStatement(
-                "SELECT * FROM tblExame ORDER BY descricao"
-        )) {
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM tblExame ORDER BY descricao");
 
-            try (ResultSet rs = ps.executeQuery()) {
+            try {
+                ResultSet rs = ps.executeQuery();
 
                 while (rs.next()) {
                     Exame exame = new Exame(
@@ -116,7 +122,11 @@ public class DaoExame {
 
                     lista.add(exame);
                 }
+                rs.close();
+            } catch (SQLException ex) {
+                System.out.println("Erro ao consultar exames: " + ex.toString());
             }
+            ps.close();
         } catch (SQLException ex) {
             System.out.println("Erro ao consultar exames: " + ex.toString());
         }
