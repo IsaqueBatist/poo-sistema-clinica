@@ -27,7 +27,61 @@ public class GuiMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar = new javax.swing.JMenuBar();
+        jMenuCadastro = new javax.swing.JMenu();
+        jMenuItemMedico = new javax.swing.JMenuItem();
+        jMenuItemPaciente = new javax.swing.JMenuItem();
+        jMenuItemSair = new javax.swing.JMenuItem();
+        jMenuRegistro = new javax.swing.JMenu();
+        jMenuItemMarcarConsulta = new javax.swing.JMenuItem();
+        jMenuItemMarcarExame = new javax.swing.JMenuItem();
+        jMenuItemPrescreverMedicacao = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Clínica POO");
+
+        jMenuCadastro.setText("Cadastro");
+
+        jMenuItemMedico.setText("Medico");
+        jMenuItemMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemMedicoActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemMedico);
+
+        jMenuItemPaciente.setText("Paciente");
+        jMenuCadastro.add(jMenuItemPaciente);
+
+        jMenuItemSair.setText("Sair");
+        jMenuItemSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSairActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemSair);
+
+        jMenuBar.add(jMenuCadastro);
+
+        jMenuRegistro.setText("Registro");
+
+        jMenuItemMarcarConsulta.setText("Marcar Consulta");
+        jMenuRegistro.add(jMenuItemMarcarConsulta);
+
+        jMenuItemMarcarExame.setText("Marcar Exame");
+        jMenuItemMarcarExame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemMarcarExameActionPerformed(evt);
+            }
+        });
+        jMenuRegistro.add(jMenuItemMarcarExame);
+
+        jMenuItemPrescreverMedicacao.setText("Prescrever Medicação");
+        jMenuRegistro.add(jMenuItemPrescreverMedicacao);
+
+        jMenuBar.add(jMenuRegistro);
+
+        setJMenuBar(jMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -37,11 +91,23 @@ public class GuiMenu extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 269, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItemMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMedicoActionPerformed
+         
+    }//GEN-LAST:event_jMenuItemMedicoActionPerformed
+
+    private void jMenuItemSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSairActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemSairActionPerformed
+
+    private void jMenuItemMarcarExameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMarcarExameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemMarcarExameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +145,14 @@ public class GuiMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuBar jMenuBar;
+    private javax.swing.JMenu jMenuCadastro;
+    private javax.swing.JMenuItem jMenuItemMarcarConsulta;
+    private javax.swing.JMenuItem jMenuItemMarcarExame;
+    private javax.swing.JMenuItem jMenuItemMedico;
+    private javax.swing.JMenuItem jMenuItemPaciente;
+    private javax.swing.JMenuItem jMenuItemPrescreverMedicacao;
+    private javax.swing.JMenuItem jMenuItemSair;
+    private javax.swing.JMenu jMenuRegistro;
     // End of variables declaration//GEN-END:variables
 }
