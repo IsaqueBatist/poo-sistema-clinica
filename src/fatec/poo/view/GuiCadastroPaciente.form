@@ -41,21 +41,26 @@
                           <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="ftxtCpf" alignment="0" min="-2" pref="140" max="-2" attributes="0"/>
-                          <Component id="txtTelefone" alignment="0" pref="251" max="32767" attributes="0"/>
-                          <Component id="txtEndereco" alignment="0" pref="251" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="txtNome" alignment="0" max="32767" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="txtPeso" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtAltura" alignment="0" max="32767" attributes="0"/>
-                              <Component id="ftxtDataNascimento" alignment="0" pref="140" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="ftxtCpf" alignment="0" min="-2" pref="140" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="txtTelefone" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="ftxtDataNascimento" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtAltura" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtPeso" alignment="0" pref="140" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
+                          <Component id="txtEndereco" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

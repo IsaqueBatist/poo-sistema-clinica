@@ -17,11 +17,11 @@ import javax.swing.JOptionPane;
  *
  * @author isaqu
  */
-public class GuiPaciente extends javax.swing.JFrame {
+public class GuiCadastroPaciente extends javax.swing.JFrame {
     /**
      * Creates new form GuiMedico
      */
-    public GuiPaciente() {
+    public GuiCadastroPaciente() {
         initComponents();
     }
 
@@ -198,17 +198,20 @@ public class GuiPaciente extends javax.swing.JFrame {
                             .addComponent(jLabel6)
                             .addComponent(jLabel7))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(ftxtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-                            .addComponent(txtEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtNome)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtPeso, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtAltura, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(ftxtDataNascimento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ftxtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(txtTelefone, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(ftxtDataNascimento, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtAltura, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtPeso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtEndereco)))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(34, 34, 34))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,13 +269,14 @@ public class GuiPaciente extends javax.swing.JFrame {
         this.habilitarInputs();
         this.ftxtCpf.setEnabled(false);
         this.btnConsultar.setEnabled(false);
+        this.txtNome.requestFocus();
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.prepConn = new PreparaConexao("", "");
         this.prepConn.setDriver("net.ucanaccess.jdbc.UcanaccessDriver");
         this.prepConn.setConnectionString("jdbc:ucanaccess://C:\\Users\\isaqu\\Desktop\\codes\\ProgBanco\\NeteBeansProjects\\prjPOOBeatrizIsaqueVictor\\prjPOO\\src\\fatec\\poo\\basededados\\DBClinica.accdb");
-        this.daoPaciente = new DaoPaciente(this.prepConn.abrirConexao());  
+        this.daoPaciente = new DaoPaciente(this.prepConn.abrirConexao()); 
     }//GEN-LAST:event_formWindowOpened
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
@@ -331,21 +335,23 @@ public class GuiPaciente extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GuiPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GuiCadastroPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GuiPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GuiCadastroPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GuiPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GuiCadastroPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GuiPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GuiCadastroPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GuiPaciente().setVisible(true);
+                new GuiCadastroPaciente().setVisible(true);
             }
         });
     }
@@ -427,6 +433,7 @@ public class GuiPaciente extends javax.swing.JFrame {
         boolean cpfValido = Pessoa.validarCPF(paciente.getCpf());
         if(!cpfValido){
             this.exibirMensagemErro("Erro! CPF inválido");
+            this.ftxtCpf.setEnabled(true);
             return false;
         }
         
@@ -450,8 +457,6 @@ public class GuiPaciente extends javax.swing.JFrame {
         ftxtDataNascimento.setText(paciente.getDataNascimento());
         txtAltura.setText(Double.toString(paciente.getAltura()));
         txtPeso.setText(Double.toString(paciente.getPeso()));
-        
-        System.out.println(telefoneComMascara);
     }
     
     private void pegarDadosPacienteAtualizado(){
