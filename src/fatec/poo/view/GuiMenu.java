@@ -5,6 +5,15 @@
  */
 package fatec.poo.view;
 
+import fatec.poo.control.DaoConsulta;
+import fatec.poo.control.DaoExame;
+import fatec.poo.control.DaoMedicacao;
+import fatec.poo.control.DaoMedico;
+import fatec.poo.control.DaoPaciente;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Beatriz-Camargo
@@ -27,7 +36,84 @@ public class GuiMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBarra = new javax.swing.JMenuBar();
+        jMenuCadastro = new javax.swing.JMenu();
+        jMenuItemMedico = new javax.swing.JMenuItem();
+        jMenuItemPaciente = new javax.swing.JMenuItem();
+        jMenuItemSair = new javax.swing.JMenuItem();
+        jMenuRegistro = new javax.swing.JMenu();
+        jMenuItemMarcarConsulta = new javax.swing.JMenuItem();
+        jMenuItemMarcarExame = new javax.swing.JMenuItem();
+        jMenuItemPrescreverMedicacao = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Clinica POO");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
+
+        jMenuCadastro.setText("Cadastro");
+
+        jMenuItemMedico.setText("Medico");
+        jMenuItemMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemMedicoActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemMedico);
+
+        jMenuItemPaciente.setText("Paciente");
+        jMenuItemPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemPacienteActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemPaciente);
+
+        jMenuItemSair.setText("Sair");
+        jMenuItemSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSairActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemSair);
+
+        jMenuBarra.add(jMenuCadastro);
+
+        jMenuRegistro.setText("Registro");
+
+        jMenuItemMarcarConsulta.setText("Marcar Consulta");
+        jMenuItemMarcarConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemMarcarConsultaActionPerformed(evt);
+            }
+        });
+        jMenuRegistro.add(jMenuItemMarcarConsulta);
+
+        jMenuItemMarcarExame.setText("Prescrever Medicacao");
+        jMenuItemMarcarExame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemMarcarExameActionPerformed(evt);
+            }
+        });
+        jMenuRegistro.add(jMenuItemMarcarExame);
+
+        jMenuItemPrescreverMedicacao.setText("Prescrever Medicacao");
+        jMenuItemPrescreverMedicacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemPrescreverMedicacaoActionPerformed(evt);
+            }
+        });
+        jMenuRegistro.add(jMenuItemPrescreverMedicacao);
+
+        jMenuBarra.add(jMenuRegistro);
+
+        setJMenuBar(jMenuBarra);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -37,11 +123,69 @@ public class GuiMenu extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 279, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+    try {
+        if (conexao != null) {
+            conexao.close();
+            System.out.println("Conexão fechada.");
+        }
+    } catch (Exception ex) {
+        System.out.println("Erro ao fechar conexão: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_formWindowClosed
+
+    private void jMenuItemMarcarExameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMarcarExameActionPerformed
+      //  GuiMarcarExame gui = new GuiMarcarExame(conexao, daoExame, daoConsulta);
+      //  gui.setVisible(true);
+    }//GEN-LAST:event_jMenuItemMarcarExameActionPerformed
+
+    private void jMenuItemMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMedicoActionPerformed
+      //  GuiCadastroMedico gui = new GuiCadastroMedico(conexao, daoMedico);
+      //  gui.setVisible(true);
+    }//GEN-LAST:event_jMenuItemMedicoActionPerformed
+
+    private void jMenuItemPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPacienteActionPerformed
+       // GuiCadastroPaciente gui = new GuiCadastroPaciente(conexao, daoPaciente);
+       // gui.setVisible(true);
+    }//GEN-LAST:event_jMenuItemPacienteActionPerformed
+
+    private void jMenuItemSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSairActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jMenuItemSairActionPerformed
+
+    private void jMenuItemMarcarConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMarcarConsultaActionPerformed
+       // GuiMarcarConsulta gui = new GuiMarcarConsulta(conexao, daoConsulta, daoMedico, daoPaciente);
+       // gui.setVisible(true);
+    }//GEN-LAST:event_jMenuItemMarcarConsultaActionPerformed
+
+    private void jMenuItemPrescreverMedicacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPrescreverMedicacaoActionPerformed
+       // GuiPrescreverMedicacao gui = new GuiPrescreverMedicacao(conexao, daoMedicacao, daoConsulta);
+       // gui.setVisible(true);
+    }//GEN-LAST:event_jMenuItemPrescreverMedicacaoActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+        conexao = DriverManager.getConnection(
+            "jdbc:ucanaccess://C:\\Users\\Victorleonardo\\Documents\\NetBeansProjects\\prjPOOBeatrizIsaqueVictor\\src\\fatec\\poo\\basededados\\DBClinica.accdb"
+        );
+
+        daoMedico = new DaoMedico(conexao);
+        daoPaciente = new DaoPaciente(conexao);
+        daoConsulta = new DaoConsulta(conexao);
+        daoMedicacao = new DaoMedicacao(conexao);
+        daoExame = new DaoExame(conexao);
+
+        System.out.println("Conexão estabelecida.");
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Erro ao conectar: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -79,5 +223,21 @@ public class GuiMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuBar jMenuBarra;
+    private javax.swing.JMenu jMenuCadastro;
+    private javax.swing.JMenuItem jMenuItemMarcarConsulta;
+    private javax.swing.JMenuItem jMenuItemMarcarExame;
+    private javax.swing.JMenuItem jMenuItemMedico;
+    private javax.swing.JMenuItem jMenuItemPaciente;
+    private javax.swing.JMenuItem jMenuItemPrescreverMedicacao;
+    private javax.swing.JMenuItem jMenuItemSair;
+    private javax.swing.JMenu jMenuRegistro;
     // End of variables declaration//GEN-END:variables
+    private Connection conexao;
+    private DaoMedico daoMedico;
+    private DaoPaciente daoPaciente;
+    private DaoConsulta daoConsulta;
+    private DaoMedicacao daoMedicacao;
+    private DaoExame daoExame;
+
 }
