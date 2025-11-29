@@ -48,14 +48,6 @@ public class GuiMenu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Clinica POO");
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
-            }
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
 
         jMenuCadastro.setText("Cadastro");
 
@@ -95,7 +87,7 @@ public class GuiMenu extends javax.swing.JFrame {
         });
         jMenuRegistro.add(jMenuItemMarcarConsulta);
 
-        jMenuItemMarcarExame.setText("Prescrever Medicacao");
+        jMenuItemMarcarExame.setText("Marcar Exame");
         jMenuItemMarcarExame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemMarcarExameActionPerformed(evt);
@@ -129,30 +121,17 @@ public class GuiMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-    try {
-        if (conexao != null) {
-            conexao.close();
-            System.out.println("Conexão fechada.");
-        }
-    } catch (Exception ex) {
-        System.out.println("Erro ao fechar conexão: " + ex.getMessage());
-    }
-    }//GEN-LAST:event_formWindowClosed
-
     private void jMenuItemMarcarExameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMarcarExameActionPerformed
-      //  GuiMarcarExame gui = new GuiMarcarExame(conexao, daoExame, daoConsulta);
-      //  gui.setVisible(true);
+      // new GuiMarcarExame().setVisible(true);
+      
     }//GEN-LAST:event_jMenuItemMarcarExameActionPerformed
 
     private void jMenuItemMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMedicoActionPerformed
-      //  GuiCadastroMedico gui = new GuiCadastroMedico(conexao, daoMedico);
-      //  gui.setVisible(true);
+      //  new GuiCadastroMedico().setVisible(true);
     }//GEN-LAST:event_jMenuItemMedicoActionPerformed
 
     private void jMenuItemPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPacienteActionPerformed
-       // GuiCadastroPaciente gui = new GuiCadastroPaciente(conexao, daoPaciente);
-       // gui.setVisible(true);
+       // new GuiCadastroPaciente.setVisible(true);
     }//GEN-LAST:event_jMenuItemPacienteActionPerformed
 
     private void jMenuItemSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSairActionPerformed
@@ -160,32 +139,13 @@ public class GuiMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemSairActionPerformed
 
     private void jMenuItemMarcarConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMarcarConsultaActionPerformed
-       // GuiMarcarConsulta gui = new GuiMarcarConsulta(conexao, daoConsulta, daoMedico, daoPaciente);
-       // gui.setVisible(true);
+       // new GuiMarcarConsulta().setVisible(true);
     }//GEN-LAST:event_jMenuItemMarcarConsultaActionPerformed
 
     private void jMenuItemPrescreverMedicacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPrescreverMedicacaoActionPerformed
-       // GuiPrescreverMedicacao gui = new GuiPrescreverMedicacao(conexao, daoMedicacao, daoConsulta);
-       // gui.setVisible(true);
+       // new GuiPrescreverMedicacao().setVisible(true);
+
     }//GEN-LAST:event_jMenuItemPrescreverMedicacaoActionPerformed
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        try {
-        conexao = DriverManager.getConnection(
-            "jdbc:ucanaccess://C:\\Users\\Victorleonardo\\Documents\\NetBeansProjects\\prjPOOBeatrizIsaqueVictor\\src\\fatec\\poo\\basededados\\DBClinica.accdb"
-        );
-
-        daoMedico = new DaoMedico(conexao);
-        daoPaciente = new DaoPaciente(conexao);
-        daoConsulta = new DaoConsulta(conexao);
-        daoMedicacao = new DaoMedicacao(conexao);
-        daoExame = new DaoExame(conexao);
-
-        System.out.println("Conexão estabelecida.");
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, "Erro ao conectar: " + ex.getMessage());
-    }
-    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -233,11 +193,5 @@ public class GuiMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemSair;
     private javax.swing.JMenu jMenuRegistro;
     // End of variables declaration//GEN-END:variables
-    private Connection conexao;
-    private DaoMedico daoMedico;
-    private DaoPaciente daoPaciente;
-    private DaoConsulta daoConsulta;
-    private DaoMedicacao daoMedicacao;
-    private DaoExame daoExame;
 
 }
