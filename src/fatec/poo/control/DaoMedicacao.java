@@ -89,32 +89,4 @@ public class DaoMedicacao {
             System.out.println("Erro ao excluir medicacao: " + ex.toString());
         }
     }
-
-    public ArrayList<Medicacao> listar() {
-        ArrayList<Medicacao> lista = new ArrayList<>();
-
-        try {
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM tblMedicacao ORDER BY nome");
-
-            try {
-                ResultSet rs = ps.executeQuery();
-
-                while (rs.next()) {
-                    Medicacao medicacao = new Medicacao(rs.getString("nome"));
-                    medicacao.setDosagem(rs.getString("dosagem"));
-                    medicacao.setQtdeDias(rs.getInt("qtde_dias"));
-
-                    lista.add(medicacao);
-                }
-                rs.close();
-            } catch (SQLException ex) {
-                System.out.println("Erro ao listar medicacoes: " + ex.toString());
-            }
-            ps.close();
-        } catch (SQLException ex) {
-            System.out.println("Erro ao listar medicacoes: " + ex.toString());
-        }
-
-        return lista;
-    }
 }

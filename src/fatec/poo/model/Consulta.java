@@ -12,11 +12,13 @@ public class Consulta {
     private double valor;
     private Medico medico;
     private ArrayList<Exame> exames;
-    private ArrayList<Medicacao> medicacoes;;
+    private ArrayList<Medicacao> medicacoes;
 
     public Consulta(int codigo, String data) {
         this.codigo = codigo;
         this.data = data;
+        exames = new ArrayList<>();
+        medicacoes = new ArrayList<>(); 
     }
 
     public double getValor() {

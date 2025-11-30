@@ -57,4 +57,8 @@ public class Exame {
     public void setConsulta(Consulta consulta) {
         this.consulta = consulta;
     }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 }
