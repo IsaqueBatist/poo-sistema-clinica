@@ -10,6 +10,7 @@ import fatec.poo.control.PreparaConexao;
 import fatec.poo.model.Medico;
 import fatec.poo.model.Pessoa;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -225,8 +226,8 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
+        if(!this.isValidoTodosOsCamposObrigatorios()) return;
         Medico medico = null;
-
         String cpfMedico = this.retirarMascaraCPF(ftxtCPF.getText());
         String nomeMedico = txtNome.getText();
         String enderecoMedico = txtEndereco.getText();
@@ -238,13 +239,12 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
         medico.setTelefone(telefoneMedico);
         medico.setEndereco(enderecoMedico);
 
-        if(this.validarMedico(medico)) {
-            this.daoMedico.inserir(medico);
-            this.resetartela();
-        }
+        this.daoMedico.inserir(medico);
+        this.resetartela();
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        if(!this.isValidoTodosOsCamposObrigatorios()) return;
         this.pegarDadosMedicoAtualizado();
         this.daoMedico.alterar(this.medico);
         this.resetartela();
@@ -274,6 +274,9 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
             return;
         }else if(cpfMedico.isEmpty()){
             this.exibirMensagemErro("É necessário informar um cpf.");
+            return;
+        }else if (!this.validarCpf(cpfMedico)){
+            this.exibirMensagemErro("Necessário inserir um CPF válido");
             return;
         }
         
@@ -374,6 +377,38 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, mensagem, "Erro", JOptionPane.ERROR_MESSAGE);
     }
     
+    private boolean isCampoObrigatorioValido(JTextField campo, String nomeCampo) {
+        String texto = campo.getText();
+
+        String textoSemMascara = texto.replaceAll("[^0-9]", ""); 
+
+        boolean isVazio;
+        if (campo instanceof javax.swing.JFormattedTextField) {
+             isVazio = textoSemMascara.isEmpty(); 
+        } else {
+             isVazio = campo.getText().trim().isEmpty();
+        }
+
+        if (isVazio) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "O campo " + nomeCampo + " é obrigatório! Por favor, preencha-o.",
+                    "Campo obrigatório",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            campo.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isValidoTodosOsCamposObrigatorios() {
+        return (isCampoObrigatorioValido(txtNome, "Nome")
+                && isCampoObrigatorioValido(txtEndereco, "Endereço")
+                && isCampoObrigatorioValido(ftxtTelefone, "Telefone")
+                && isCampoObrigatorioValido(txtCRM, "Crm"));
+    }
+    
     
     private void resetartela(){
         this.ftxtCPF.setText("");
@@ -434,30 +469,8 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
         return cpfComMascara.replaceAll("\\D", "");
     }
     
-    private boolean validarMedico(Medico medico){
-        boolean cpfValido = Pessoa.validarCPF(medico.getCpf());
-        if(!cpfValido){
-            this.exibirMensagemErro("Erro! CPF inválido.");
-            this.ftxtCPF.setEnabled(true);
-            return false;
-        }
-        
-        if(medico.getNome().isEmpty()){
-            this.exibirMensagemErro("Erro! 'Nome' é um campo requerido.");
-            return false;
-        }
-        
-        if(medico.getCrm().isEmpty()){
-            this.exibirMensagemErro("Erro! 'Crm' é um campo requerido.");
-            return false;
-        }
-        
-        if(medico.getEspecialidade().isEmpty()){
-            this.exibirMensagemErro("Erro! 'Especialidade' é um campo requerido.");
-            return false;
-        }
-
-        return true;
+    private boolean validarCpf(String cpf){
+        return Pessoa.validarCPF(cpf);
     }
     
 }
