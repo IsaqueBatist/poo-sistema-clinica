@@ -50,32 +50,40 @@ public class DaoMedicacao {
         }
     }
 
-    public Medicacao consultar(String nomeMedicacao) {
-        Medicacao medicacao = null;
+    public Medicacao consultar(String nomeMedicacao, int codConsulta) {
+    Medicacao medicacao = null;
+
+    try {
+        PreparedStatement ps = conn.prepareStatement(
+            "SELECT * FROM tblMedicacao WHERE nome = ? AND codigo_consulta = ?"
+        );
+
+        ps.setString(1, nomeMedicacao);
+        ps.setInt(2, codConsulta);
 
         try {
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM tblMedicacao WHERE nome = ?");
+            ResultSet rs = ps.executeQuery();
 
-            ps.setString(1, nomeMedicacao);
-            try {
-                ResultSet rs = ps.executeQuery();
-
-                if (rs.next()) {
-                    medicacao = new Medicacao(rs.getString("nome"));
-                    medicacao.setDosagem(rs.getString("dosagem"));
-                    medicacao.setQtdeDias(rs.getInt("qtde_dias"));
-                }
-                rs.close();
-            } catch (SQLException ex) {
-                System.out.println("Erro ao consultar medicacao: " + ex.toString());
+            if (rs.next()) {
+                medicacao = new Medicacao(rs.getString("nome"));
+                medicacao.setDosagem(rs.getString("dosagem"));
+                medicacao.setQtdeDias(rs.getInt("qtde_dias"));
             }
-            ps.close();
+
+            rs.close();
+        } catch (SQLException ex) {
+            System.out.println("Erro ao consultar medicacao (ResultSet): " + ex.toString());
+        }
+
+        ps.close();
+
         } catch (SQLException ex) {
             System.out.println("Erro ao consultar medicacao: " + ex.toString());
         }
 
         return medicacao;
-    }
+        }
+
 
     public void excluir(String nomeMedicacao) {
         try {
@@ -117,4 +125,5 @@ public class DaoMedicacao {
 
         return lista;
     }
+
 }

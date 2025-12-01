@@ -11,7 +11,6 @@ import fatec.poo.control.DaoPaciente;
 import fatec.poo.control.PreparaConexao;
 import fatec.poo.model.Consulta;
 import fatec.poo.model.Medicacao;
-import fatec.poo.model.Paciente;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 
@@ -138,53 +137,51 @@ public class GuiPrescreverMedicacao extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnInserir, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-                        .addGap(39, 39, 39)
-                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblCodigoConsulta)
-                            .addComponent(lblNome)
-                            .addComponent(lblDosagem)
-                            .addComponent(lblQuantidadeDias))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtQuantidadeDias, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-                            .addComponent(txtNome)
-                            .addComponent(txtCodigoConsulta)
-                            .addComponent(txtDosagem))
-                        .addGap(18, 18, Short.MAX_VALUE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
-                        .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnConsultar)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCodigoConsulta)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblMedicoTexto)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lblCodigoConsulta)
+                    .addComponent(lblNome)
+                    .addComponent(lblDosagem)
+                    .addComponent(lblQuantidadeDias))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtQuantidadeDias, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                    .addComponent(txtNome)
+                    .addComponent(txtCodigoConsulta)
+                    .addComponent(txtDosagem))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(btnCodigoConsulta)
+                .addGap(18, 18, 18)
+                .addComponent(lblMedicoTexto)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(btnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(55, 55, 55)
+                .addGap(57, 57, 57)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNome)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnConsultar))
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCodigoConsulta)
-                    .addComponent(txtCodigoConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCodigoConsulta)
-                    .addComponent(lblMedicoTexto)
-                    .addComponent(lblMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblMedico, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblCodigoConsulta)
+                        .addComponent(txtCodigoConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCodigoConsulta)
+                        .addComponent(lblMedicoTexto)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDosagem)
@@ -193,13 +190,14 @@ public class GuiPrescreverMedicacao extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblQuantidadeDias)
                     .addComponent(txtQuantidadeDias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnConsultar)
                     .addComponent(btnInserir)
                     .addComponent(btnAlterar)
                     .addComponent(btnExcluir)
                     .addComponent(btnSair))
-                .addContainerGap())
+                .addGap(19, 19, 19))
         );
 
         pack();
@@ -304,7 +302,7 @@ public class GuiPrescreverMedicacao extends javax.swing.JFrame {
         
         daoMedicacao = new DaoMedicacao(conn);
         daoPaciente = new DaoPaciente(conn);
-        daoConsulta = new DaoConsulta(prepCon.abrirConexao());
+        daoConsulta = new DaoConsulta(conn);
     }
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {
@@ -338,17 +336,35 @@ public class GuiPrescreverMedicacao extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        medicacao = daoMedicacao.consultar(txtNome.getText());
+        medicacao = daoMedicacao.consultar(
+            txtNome.getText(),
+            Integer.parseInt(txtCodigoConsulta.getText())
+    );
 
     if (medicacao == null) {
         JOptionPane.showMessageDialog(this, "Medicação não cadastrada.");
         btnInserir.setEnabled(true);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+
+        txtDosagem.setText(null);
+        txtQuantidadeDias.setText(null);
+
+        txtDosagem.setEnabled(true);
+        txtQuantidadeDias.setEnabled(true);
+        txtDosagem.requestFocus();
+
     } else {
-        txtDosagem.setText(String.valueOf(medicacao.getDosagem()));
+        txtDosagem.setText(medicacao.getDosagem());
         txtQuantidadeDias.setText(String.valueOf(medicacao.getQtdeDias()));
-        
+
+        btnInserir.setEnabled(false);
         btnAlterar.setEnabled(true);
         btnExcluir.setEnabled(true);
+
+        txtDosagem.setEnabled(true);
+        txtQuantidadeDias.setEnabled(true);
+        txtDosagem.requestFocus();
     }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
