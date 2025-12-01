@@ -12,6 +12,7 @@ import fatec.poo.model.Pessoa;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -250,15 +251,19 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         String cpfPaciente = this.retirarMascaraCPF(ftxtCpf.getText());
-        this.paciente = this.daoPaciente.consultar(cpfPaciente);
         if(cpfPaciente.isEmpty()){
             this.exibirMensagemErro("É necessário informar um cpf.");
             return;
+        }else if (!this.validarCpf(cpfPaciente)){
+            this.exibirMensagemErro("CPF inválido, informe um CPF válido.");
+            return;
         }
+        this.paciente = this.daoPaciente.consultar(cpfPaciente);
         
         if(this.paciente == null){
             this.alterarBotoesAoCriar();
@@ -280,29 +285,32 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
-        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        Paciente paciente = null;
-
-        String cpfPaciente = this.retirarMascaraCPF(ftxtCpf.getText());
+        txtTelefone.setText(this.retirarMascaraTelefone(txtTelefone.getText()));
+        ftxtDataNascimento.setText(ftxtDataNascimento.getText().replace("/", ""));
+        
+        if(this.isValidoTodosOsCamposObrigatorios()){
+           return;
+        }
+        String alturaInput = txtAltura.getText().replace(",", ".");
+        String pesoInput = txtPeso.getText().replace(",", ".");
         String nomePaciente = txtNome.getText();
         String enderecoPaciente = txtEndereco.getText();
         String telefonePaciente = this.retirarMascaraTelefone(txtTelefone.getText());
         String dataNascimentoPaciente = ftxtDataNascimento.getText();
-        Double alturaPaciente = Double.parseDouble(txtAltura.getText().replace(",", "."));
-        Double pesoPaciente = Double.parseDouble(txtPeso.getText().replace(",", "."));
-        paciente = new Paciente(cpfPaciente, nomePaciente, LocalDate.parse(dataNascimentoPaciente, formatador));
-        paciente.setAltura(alturaPaciente);
-        paciente.setEndereco(enderecoPaciente);
-        paciente.setPeso(pesoPaciente);
-        paciente.setTelefone(telefonePaciente);
         
-        if(this.validarPaciente(paciente)){
-            this.daoPaciente.inserir(paciente);
-            this.resetartela();
-        }
+        this.paciente.setAltura(Double.parseDouble(alturaInput));
+        this.paciente.setDataNascimento(dataNascimentoPaciente);
+        this.paciente.setEndereco(enderecoPaciente);
+        this.paciente.setNome(nomePaciente);
+        this.paciente.setPeso(Double.parseDouble(pesoInput));
+        this.paciente.setTelefone(telefonePaciente);
+        
+        this.daoPaciente.inserir(paciente);
+        this.resetartela();
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        if(!this.isValidoTodosOsCamposObrigatorios()) return;
         this.pegarDadosPacienteAtualizado();
         this.daoPaciente.alterar(this.paciente);
         this.resetartela();
@@ -429,26 +437,44 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
         return String.format("(%s)%s-%s", ddd, parte1, parte2);
     }
     
-    private boolean validarPaciente(Paciente paciente){
-        boolean cpfValido = Pessoa.validarCPF(paciente.getCpf());
-        if(!cpfValido){
-            this.exibirMensagemErro("Erro! CPF inválido");
-            this.ftxtCpf.setEnabled(true);
-            return false;
+    private boolean validarCpf(String cpf){
+        return Pessoa.validarCPF(cpf);
+    }
+    
+    private boolean isCampoObrigatorioValido(JTextField campo, String nomeCampo) {
+        String texto = campo.getText();
+
+        String textoSemMascara = texto.replaceAll("[^0-9]", ""); 
+
+        boolean isVazio;
+        if (campo instanceof javax.swing.JFormattedTextField) {
+             isVazio = textoSemMascara.isEmpty(); 
+        } else {
+             isVazio = campo.getText().trim().isEmpty();
         }
-        
-        if(paciente.getNome().isEmpty()){
-            this.exibirMensagemErro("Erro! 'Nome' é um campo requerido");
-            return false;
-        }
-        
-        if(paciente.getDataNascimento().isEmpty()){
-            this.exibirMensagemErro("Erro! 'Data nascimento' é um campo requerido");
+
+        if (isVazio) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "O campo " + nomeCampo + " é obrigatório! Por favor, preencha-o.",
+                    "Campo obrigatório",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            campo.requestFocus();
             return false;
         }
         return true;
     }
-    
+
+    private boolean isValidoTodosOsCamposObrigatorios() {
+        return (isCampoObrigatorioValido(txtNome, "Nome")
+                && isCampoObrigatorioValido(txtEndereco, "Endereço")
+                && isCampoObrigatorioValido(txtTelefone, "Telefone")
+                && isCampoObrigatorioValido(ftxtDataNascimento, "Data")
+                && isCampoObrigatorioValido(txtAltura, "Altura")
+                && isCampoObrigatorioValido(txtPeso, "Peso"));
+    }
+
     private void preencherDadosPaciente(Paciente paciente){
         String telefoneComMascara = this.adicionarMascaraTelefone(paciente.getTelefone());
         txtNome.setText(paciente.getNome());
