@@ -66,6 +66,9 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro Paciente");
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -325,6 +328,10 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
         this.dispose();
         this.prepConn.fecharConexao();
     }//GEN-LAST:event_btnSairActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        this.prepConn.fecharConexao();
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

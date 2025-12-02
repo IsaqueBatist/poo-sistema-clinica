@@ -122,16 +122,16 @@ public class GuiMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItemMarcarExameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMarcarExameActionPerformed
-      // new GuiMarcarExame().setVisible(true);
+       new GuiMarcarExame().setVisible(true);
       
     }//GEN-LAST:event_jMenuItemMarcarExameActionPerformed
 
     private void jMenuItemMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMedicoActionPerformed
-      //  new GuiCadastroMedico().setVisible(true);
+        new GuiCadastroMedico().setVisible(true);
     }//GEN-LAST:event_jMenuItemMedicoActionPerformed
 
     private void jMenuItemPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPacienteActionPerformed
-       // new GuiCadastroPaciente.setVisible(true);
+        new GuiCadastroPaciente().setVisible(true);
     }//GEN-LAST:event_jMenuItemPacienteActionPerformed
 
     private void jMenuItemSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSairActionPerformed
@@ -139,11 +139,11 @@ public class GuiMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemSairActionPerformed
 
     private void jMenuItemMarcarConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMarcarConsultaActionPerformed
-       // new GuiMarcarConsulta().setVisible(true);
+        new GuiMarcarConsulta().setVisible(true);
     }//GEN-LAST:event_jMenuItemMarcarConsultaActionPerformed
 
     private void jMenuItemPrescreverMedicacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPrescreverMedicacaoActionPerformed
-       // new GuiPrescreverMedicacao().setVisible(true);
+        new GuiPrescreverMedicacao().setVisible(true);
 
     }//GEN-LAST:event_jMenuItemPrescreverMedicacaoActionPerformed
 

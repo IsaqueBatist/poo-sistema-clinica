@@ -55,6 +55,9 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro Médico");
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -293,6 +296,10 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
         this.btnConsultar.setEnabled(false);
         this.txtNome.requestFocus();
     }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        this.prepConn.fecharConexao();
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
