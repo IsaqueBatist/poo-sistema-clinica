@@ -5,6 +5,13 @@
  */
 package fatec.poo.view;
 
+import fatec.poo.control.DaoMedico;
+import fatec.poo.control.PreparaConexao;
+import fatec.poo.model.Medico;
+import fatec.poo.model.Pessoa;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 /**
  *
  * @author isaqu
@@ -27,11 +34,10 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnConsultar1 = new javax.swing.JButton();
-        btnInserir1 = new javax.swing.JButton();
-        btnAlterar1 = new javax.swing.JButton();
-        btnExcluir1 = new javax.swing.JButton();
-        btnSair1 = new javax.swing.JButton();
+        btnInserir = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+        btnSair = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         ftxtCPF = new javax.swing.JFormattedTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -44,60 +50,62 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
         txtCRM = new javax.swing.JTextField();
         ftxtTelefone = new javax.swing.JFormattedTextField();
         cbxEspecialidade = new javax.swing.JComboBox<>();
+        btnConsultar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro Médico");
-
-        btnConsultar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/pesq.png"))); // NOI18N
-        btnConsultar1.setText("Consultar");
-        btnConsultar1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultar1ActionPerformed(evt);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
-        btnInserir1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/rem.png"))); // NOI18N
-        btnInserir1.setText("Inserir");
-        btnInserir1.setEnabled(false);
-        btnInserir1.addActionListener(new java.awt.event.ActionListener() {
+        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/rem.png"))); // NOI18N
+        btnInserir.setText("Inserir");
+        btnInserir.setEnabled(false);
+        btnInserir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInserir1ActionPerformed(evt);
+                btnInserirActionPerformed(evt);
             }
         });
 
-        btnAlterar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/Alterar.png"))); // NOI18N
-        btnAlterar1.setText("Alterar");
-        btnAlterar1.setEnabled(false);
-        btnAlterar1.addActionListener(new java.awt.event.ActionListener() {
+        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/Alterar.png"))); // NOI18N
+        btnAlterar.setText("Alterar");
+        btnAlterar.setEnabled(false);
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAlterar1ActionPerformed(evt);
+                btnAlterarActionPerformed(evt);
             }
         });
 
-        btnExcluir1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/Eraser.png"))); // NOI18N
-        btnExcluir1.setText("Excluir");
-        btnExcluir1.setEnabled(false);
-        btnExcluir1.addActionListener(new java.awt.event.ActionListener() {
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/Eraser.png"))); // NOI18N
+        btnExcluir.setText("Excluir");
+        btnExcluir.setEnabled(false);
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExcluir1ActionPerformed(evt);
+                btnExcluirActionPerformed(evt);
             }
         });
 
-        btnSair1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/exit.png"))); // NOI18N
-        btnSair1.setText("Sair");
-        btnSair1.addActionListener(new java.awt.event.ActionListener() {
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/exit.png"))); // NOI18N
+        btnSair.setText("Sair");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSair1ActionPerformed(evt);
+                btnSairActionPerformed(evt);
             }
         });
 
         jLabel1.setText("CPF");
 
-        ftxtCPF.setText("jFormattedTextField1");
+        try {
+            ftxtCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         jLabel2.setText("Nome");
 
-        txtNome.setText("jTextField1");
+        txtNome.setEnabled(false);
 
         jLabel3.setText("Endereço");
 
@@ -107,13 +115,27 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
 
         jLabel6.setText("Especialidade");
 
-        txtEndereco.setText("jTextField2");
+        txtEndereco.setEnabled(false);
 
-        txtCRM.setText("jTextField4");
+        txtCRM.setEnabled(false);
 
-        ftxtTelefone.setText("jFormattedTextField1");
+        try {
+            ftxtTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        ftxtTelefone.setEnabled(false);
 
-        cbxEspecialidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxEspecialidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cardiologia", "Endocrinologia", "Nefrologia", "Pneumatologia" }));
+        cbxEspecialidade.setEnabled(false);
+
+        btnConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/pesq.png"))); // NOI18N
+        btnConsultar.setText("Consultar");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,34 +153,39 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(ftxtCPF)
-                                    .addComponent(txtCRM))
-                                .addGap(69, 69, 69)
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbxEspecialidade, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(txtNome)
                             .addComponent(txtEndereco)
-                            .addComponent(ftxtTelefone)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(ftxtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(ftxtCPF, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                                    .addComponent(txtCRM))
+                                .addGap(18, 18, Short.MAX_VALUE)
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbxEspecialidade, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnConsultar1)
+                        .addGap(22, 22, 22)
+                        .addComponent(btnConsultar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnInserir1)
+                        .addComponent(btnAlterar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAlterar1)
+                        .addComponent(btnExcluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExcluir1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSair1)))
-                .addContainerGap(52, Short.MAX_VALUE))
+                        .addComponent(btnSair)))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAlterar, btnExcluir, btnSair});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(ftxtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -180,76 +207,92 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jLabel6)
                     .addComponent(cbxEspecialidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnConsultar1)
-                    .addComponent(btnInserir1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAlterar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnExcluir1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSair1))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnInserir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSair))
+                        .addGap(23, 23, 23))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnConsultar)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnConsultar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultar1ActionPerformed
-        String cpfPaciente = this.retirarMascaraCPF(ftxtCpf.getText());
-        this.paciente = this.daoPaciente.consultar(cpfPaciente);
-        if(cpfPaciente.isEmpty()){
+    private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
+        if(!this.isValidoTodosOsCamposObrigatorios()) return;
+        Medico medico = null;
+        String cpfMedico = this.retirarMascaraCPF(ftxtCPF.getText());
+        String nomeMedico = txtNome.getText();
+        String enderecoMedico = txtEndereco.getText();
+        String telefoneMedico = this.retirarMascaraTelefone(ftxtTelefone.getText());
+        String crmMedico = this.txtCRM.getText();
+        String especialidadeMedico = this.cbxEspecialidade.getSelectedItem().toString();
+        
+        medico = new Medico(cpfMedico, nomeMedico, crmMedico, especialidadeMedico);
+        medico.setTelefone(telefoneMedico);
+        medico.setEndereco(enderecoMedico);
+
+        this.daoMedico.inserir(medico);
+        this.resetartela();
+    }//GEN-LAST:event_btnInserirActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        if(!this.isValidoTodosOsCamposObrigatorios()) return;
+        this.pegarDadosMedicoAtualizado();
+        this.daoMedico.alterar(this.medico);
+        this.resetartela();
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        this.daoMedico.excluir(this.medico);
+        this.resetartela();
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        this.dispose();
+        this.prepConn.fecharConexao();
+    }//GEN-LAST:event_btnSairActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.prepConn = new PreparaConexao("", "");
+        this.prepConn.setDriver("net.ucanaccess.jdbc.UcanaccessDriver");
+        this.prepConn.setConnectionString("jdbc:ucanaccess://C:\\Users\\isaqu\\Desktop\\codes\\ProgBanco\\NeteBeansProjects\\prjPOOBeatrizIsaqueVictor\\prjPOO\\src\\fatec\\poo\\basededados\\DBClinica.accdb");
+        this.daoMedico = new DaoMedico(this.prepConn.abrirConexao());  
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        String cpfMedico = this.retirarMascaraCPF(ftxtCPF.getText());
+        if(cpfMedico.length() < 11){
+            this.exibirMensagemErro("É necessário informar os 11 digitos do cpf.");
+            return;
+        }else if(cpfMedico.isEmpty()){
             this.exibirMensagemErro("É necessário informar um cpf.");
             return;
+        }else if (!this.validarCpf(cpfMedico)){
+            this.exibirMensagemErro("Necessário inserir um CPF válido");
+            return;
         }
-
-        if(this.paciente == null){
+        
+        this.medico = this.daoMedico.consultar(cpfMedico);
+        
+        if(this.medico == null){
             this.alterarBotoesAoCriar();
         }else{
             this.alterarBotoesAoAtualizar();
-            this.preencherDadosPaciente(this.paciente);
+            this.preencherDadosMedico(this.medico);
         }
         this.habilitarInputs();
-        this.ftxtCpf.setEnabled(false);
+        this.ftxtCPF.setEnabled(false);
         this.btnConsultar.setEnabled(false);
-    }//GEN-LAST:event_btnConsultar1ActionPerformed
-
-    private void btnInserir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserir1ActionPerformed
-        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        Paciente paciente = null;
-
-        String cpfPaciente = this.retirarMascaraCPF(ftxtCpf.getText());
-        String nomePaciente = txtNome.getText();
-        String enderecoPaciente = txtEndereco.getText();
-        String telefonePaciente = this.retirarMascaraTelefone(txtTelefone.getText());
-        String dataNascimentoPaciente = ftxtDataNascimento.getText();
-        Double alturaPaciente = Double.parseDouble(txtAltura.getText().replace(",", "."));
-        Double pesoPaciente = Double.parseDouble(txtPeso.getText().replace(",", "."));
-        paciente = new Paciente(cpfPaciente, nomePaciente, LocalDate.parse(dataNascimentoPaciente, formatador));
-        paciente.setAltura(alturaPaciente);
-        paciente.setEndereco(enderecoPaciente);
-        paciente.setPeso(pesoPaciente);
-        paciente.setTelefone(telefonePaciente);
-
-        if(this.validarPaciente(paciente)){
-            this.daoPaciente.inserir(paciente);
-            this.resetartela();
-        }
-    }//GEN-LAST:event_btnInserir1ActionPerformed
-
-    private void btnAlterar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterar1ActionPerformed
-        this.pegarDadosPacienteAtualizado();
-        this.daoPaciente.alterar(this.paciente);
-        this.resetartela();
-    }//GEN-LAST:event_btnAlterar1ActionPerformed
-
-    private void btnExcluir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluir1ActionPerformed
-        this.daoPaciente.excluir(this.paciente);
-        this.resetartela();
-    }//GEN-LAST:event_btnExcluir1ActionPerformed
-
-    private void btnSair1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSair1ActionPerformed
-        this.dispose();
-        this.prepConn.fecharConexao();
-    }//GEN-LAST:event_btnSair1ActionPerformed
+        this.txtNome.requestFocus();
+    }//GEN-LAST:event_btnConsultarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -287,11 +330,11 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAlterar1;
-    private javax.swing.JButton btnConsultar1;
-    private javax.swing.JButton btnExcluir1;
-    private javax.swing.JButton btnInserir1;
-    private javax.swing.JButton btnSair1;
+    private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnConsultar;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnInserir;
+    private javax.swing.JButton btnSair;
     private javax.swing.JComboBox<String> cbxEspecialidade;
     private javax.swing.JFormattedTextField ftxtCPF;
     private javax.swing.JFormattedTextField ftxtTelefone;
@@ -305,4 +348,129 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
     private javax.swing.JTextField txtEndereco;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
+    private PreparaConexao prepConn;
+    private DaoMedico daoMedico;
+    private Medico medico;
+    
+    private void habilitarInputs(){
+        this.txtNome.setEnabled(true);
+        this.txtEndereco.setEnabled(true);
+        this.ftxtTelefone.setEnabled(true);
+        this.txtCRM.setEnabled(true);
+        this.cbxEspecialidade.setEnabled(true);
+    }
+    
+    private void alterarBotoesAoCriar(){
+        this.btnAlterar.setEnabled(false);
+        this.btnExcluir.setEnabled(false);
+        this.btnInserir.setEnabled(true);
+    }
+    
+    private void alterarBotoesAoAtualizar(){
+        this.btnInserir.setEnabled(false);
+        this.btnExcluir.setEnabled(true);
+        this.btnAlterar.setEnabled(true);
+    }
+    
+    
+    private void exibirMensagemErro(String mensagem){
+        JOptionPane.showMessageDialog(null, mensagem, "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    private boolean isCampoObrigatorioValido(JTextField campo, String nomeCampo) {
+        String texto = campo.getText();
+
+        String textoSemMascara = texto.replaceAll("[^0-9]", ""); 
+
+        boolean isVazio;
+        if (campo instanceof javax.swing.JFormattedTextField) {
+             isVazio = textoSemMascara.isEmpty(); 
+        } else {
+             isVazio = campo.getText().trim().isEmpty();
+        }
+
+        if (isVazio) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "O campo " + nomeCampo + " é obrigatório! Por favor, preencha-o.",
+                    "Campo obrigatório",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            campo.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isValidoTodosOsCamposObrigatorios() {
+        return (isCampoObrigatorioValido(txtNome, "Nome")
+                && isCampoObrigatorioValido(txtEndereco, "Endereço")
+                && isCampoObrigatorioValido(ftxtTelefone, "Telefone")
+                && isCampoObrigatorioValido(txtCRM, "Crm"));
+    }
+    
+    
+    private void resetartela(){
+        this.ftxtCPF.setText("");
+        this.txtNome.setText("");
+        this.txtEndereco.setText("");
+        this.txtCRM.setText("");
+        this.cbxEspecialidade.setSelectedIndex(0);
+        this.ftxtTelefone.setText("");
+        
+        this.txtNome.setEnabled(false);
+        this.txtEndereco.setEnabled(false);
+        this.txtCRM.setEnabled(false);
+        this.cbxEspecialidade.setEnabled(false);
+        this.ftxtTelefone.setEnabled(false);
+        
+        this.btnConsultar.setEnabled(true);
+        this.btnInserir.setEnabled(false);
+        this.btnAlterar.setEnabled(false);
+        this.btnExcluir.setEnabled(false);
+        
+        this.ftxtCPF.setEnabled(true);
+    }
+    
+    private void pegarDadosMedicoAtualizado(){
+        this.medico.setNome(txtNome.getText());
+        this.medico.setEndereco(txtEndereco.getText());
+        this.medico.setTelefone(this.retirarMascaraTelefone(ftxtTelefone.getText()));
+        this.medico.setCrm(txtCRM.getText());
+        this.medico.setEspecialidade(cbxEspecialidade.getSelectedItem().toString());
+    }
+    
+    private String adicionarMascaraTelefone(String telefoneSemMascara){
+        if (telefoneSemMascara == null || telefoneSemMascara.length() != 11) {
+            return telefoneSemMascara;
+        }
+
+        String ddd = telefoneSemMascara.substring(0, 2);
+        String parte1 = telefoneSemMascara.substring(2, 7);
+        String parte2 = telefoneSemMascara.substring(7);
+        
+        return String.format("(%s)%s-%s", ddd, parte1, parte2);
+    }
+    
+    private void preencherDadosMedico(Medico medico){
+        String telefoneComMascara = this.adicionarMascaraTelefone(medico.getTelefone());
+        txtNome.setText(medico.getNome());
+        txtEndereco.setText(medico.getEndereco());
+        txtCRM.setText(medico.getCrm());
+        ftxtTelefone.setText(telefoneComMascara);
+        cbxEspecialidade.setSelectedItem(medico.getEspecialidade());
+    }
+    
+    private String retirarMascaraTelefone(String telefoneComMascara){
+        return telefoneComMascara.replaceAll("\\D", "");
+    }
+    
+    private String retirarMascaraCPF(String cpfComMascara){
+        return cpfComMascara.replaceAll("\\D", "");
+    }
+    
+    private boolean validarCpf(String cpf){
+        return Pessoa.validarCPF(cpf);
+    }
+    
 }

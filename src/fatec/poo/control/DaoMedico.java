@@ -60,8 +60,8 @@ public class DaoMedico {
                 if (rs.next()) {
                     medico = new Medico(cpf, rs.getString("nome"), rs.getString("crm"), rs.getString("especialidade"));
 
-                    medico.setEndereco("endereco");
-                    medico.setTelefone("telefone");
+                    medico.setEndereco(rs.getString("endereco"));
+                    medico.setTelefone(rs.getString("telefone"));
                 }
             } catch (SQLException ex) {
                 System.out.println("Erro ao consultar médico: " + ex.getMessage());
