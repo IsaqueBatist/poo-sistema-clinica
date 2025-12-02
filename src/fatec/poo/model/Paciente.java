@@ -35,6 +35,10 @@ public class Paciente extends Pessoa {
         return altura;
     }
 
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
     public void setAltura(double altura){
         this.altura = altura;
     }

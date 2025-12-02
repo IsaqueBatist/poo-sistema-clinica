@@ -23,6 +23,14 @@ public class Medico extends Pessoa {
         return this.crm;
     }
 
+    public void setCrm(String crm) {
+        this.crm = crm;
+    }
+
+    public void setEspecialidade(String especialidade) {
+        this.especialidade = especialidade;
+    }
+
     public String getEspecialidade() {
         return this.especialidade;
     }

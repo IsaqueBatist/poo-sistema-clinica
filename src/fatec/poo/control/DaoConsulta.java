@@ -1,15 +1,12 @@
 package fatec.poo.control;
 
 import fatec.poo.model.Consulta;
-import fatec.poo.model.Exame;
-import fatec.poo.model.Medicacao;
 import fatec.poo.model.Medico;
 import fatec.poo.model.Paciente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  *
@@ -24,8 +21,8 @@ public class DaoConsulta {
     }
 
     public void inserir(Consulta consulta, Paciente paciente) {
-        try {
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO tblConsulta (codigo, data, valor, cpf_paciente, cpf_medico) VALUES (?, ?, ?, ?, ?)");
+
+        try (PreparedStatement ps = conn.prepareStatement("INSERT INTO tblConsulta (codigo, data, valor, cpf_paciente, cpf_medico) VALUES (?, ?, ?, ?, ?)")) {
             ps.setInt(1, consulta.getCodigo());
             ps.setString(2, consulta.getData());
             ps.setDouble(3, consulta.getValor());
@@ -33,7 +30,6 @@ public class DaoConsulta {
             ps.setString(5, consulta.getMedico().getCpf());
 
             ps.executeUpdate();
-            ps.close();
         } catch (SQLException ex) {
             System.out.println("Erro ao inserir consulta: " + ex.toString());
         }
@@ -47,7 +43,7 @@ public class DaoConsulta {
             ps.setInt(3, consulta.getCodigo());
 
             ps.executeUpdate();
-            ps.close();
+
         } catch (SQLException ex) {
             System.out.println("Erro ao alterar conulsta: " + ex.toString());
         }
@@ -73,12 +69,15 @@ public class DaoConsulta {
 
                     consulta.setMedico(medico);
                     consulta.setValor(rs.getDouble("valor"));
+                    if (paciente != null) {
+
+                        paciente.addConsulta(consulta);
+                    }
                 }
-                rs.close();
+
             } catch (SQLException ex) {
                 System.out.println("Erro ao consultar consulta: " + ex.toString());
             }
-            ps.close();
         } catch (SQLException ex) {
             System.out.println("Erro ao consultar consulta: " + ex.toString());
         }
@@ -113,88 +112,4 @@ public class DaoConsulta {
             System.out.println("Erro ao excluir consulta: " + ex.getMessage());
         }
     }
-
-    public ArrayList<Exame> consultarExames(Consulta consulta) {
-        ArrayList<Exame> exames = new ArrayList<>();
-        try {
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM tblExame WHERE codigo_consulta = ?");
-            ps.setInt(1, consulta.getCodigo());
-            try {
-                ResultSet rs = ps.executeQuery();
-                while (rs.next()) {
-                    Exame exame = new Exame(rs.getInt("codigo"), rs.getString("descricao"));
-                    exame.setConsulta(consulta);
-                    exame.setData(rs.getString("data"));
-                    exame.setHorario(rs.getString("horario"));
-                    exame.setValor(rs.getDouble("valor"));
-
-                    exames.add(exame);
-                }
-                rs.close();
-            } catch (SQLException ex) {
-                System.out.println("Erro ao consultar exames da consulta: " + ex.toString());
-            }
-            ps.close();
-        } catch (SQLException ex) {
-            System.out.println("Erro ao consultar exames da consulta: " + ex.toString());
-        }
-        return exames;
-    }
-
-    public ArrayList<Medicacao> consultarMedicacoes(Consulta consulta) {
-        ArrayList<Medicacao> medicacoes = new ArrayList<>();
-        try {
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM tblMedicacao WHERE codigo_consulta = ?");
-            ps.setInt(1, consulta.getCodigo());
-            try {
-                ResultSet rs = ps.executeQuery();
-                while (rs.next()) {
-                    Medicacao medicacao = new Medicacao(rs.getString("nome"));
-                    medicacao.setDosagem(rs.getString("dosagem"));
-                    medicacao.setQtdeDias(rs.getInt("qtde_dias"));
-
-                    medicacoes.add(medicacao);
-                }
-                rs.close();
-            } catch (SQLException ex) {
-                System.out.println("Erro ao consultar exames da consulta: " + ex.toString());
-            }
-            ps.close();
-        } catch (SQLException ex) {
-            System.out.println("Erro ao consultar exames da consulta: " + ex.toString());
-        }
-        return medicacoes;
-    }
-
-    public ArrayList<Consulta> listarConsultasPaciente(String cpfPaciente) {
-        ArrayList<Consulta> consultas = new ArrayList();
-        try {
-            PreparedStatement ps = conn.prepareStatement("SELECT * from tblConsultas where cpf_paciente = ?");
-
-            ps.setString(1, cpfPaciente);
-
-            try {
-                ResultSet rs = ps.executeQuery();
-                while (rs.next()) { // Alterado para while, pois pode retornar mais de uma
-                    Consulta consulta = new Consulta(rs.getInt("codigo"), rs.getString("data"));
-                    String cpfMedico = rs.getString("cpf_medico");
-                    Medico medico = new DaoMedico(conn).consultar(cpfMedico);
-
-                    consulta.setMedico(medico);
-                    consulta.setValor(rs.getDouble("valor"));
-
-                    consultas.add(consulta);
-                }
-                rs.close();
-            } catch (SQLException ex) {
-                System.out.println("Erro ao consultar consultas do paciente: " + ex.toString());
-            }
-            ps.close();
-        } catch (SQLException ex) {
-            System.out.println("Erro ao consultar consultas do paciente: " + ex.toString());
-        }
-
-        return consultas;
-    }
-
 }
