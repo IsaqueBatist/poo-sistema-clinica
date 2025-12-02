@@ -59,7 +59,7 @@ public class Paciente extends Pessoa {
     public void addConsulta(Consulta consulta){
         this.consultas.add(consulta);
     }
-    
+
     public ArrayList<Consulta> getConsultas(){
         return this.consultas;
     }

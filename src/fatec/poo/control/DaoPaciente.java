@@ -59,7 +59,7 @@ public class DaoPaciente {
 
     public Paciente consultar(String cpf) {
         Paciente paciente = null;
-        DateTimeFormatter formator = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         try {
             PreparedStatement ps = conn.prepareStatement("Select * from tblPaciente where cpf = ?");
@@ -68,7 +68,7 @@ public class DaoPaciente {
             try {
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
-                    paciente = new Paciente(cpf, rs.getString("nome"), LocalDate.parse(rs.getString("data_nascimento"), formator));
+                    paciente = new Paciente(cpf, rs.getString("nome"), LocalDate.parse(rs.getString("data_nascimento"), formatador));
 
                     paciente.setEndereco("endereco");
                     paciente.setTelefone("telefone");

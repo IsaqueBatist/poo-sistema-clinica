@@ -89,6 +89,16 @@ public class DaoMedicacao {
             System.out.println("Erro ao excluir medicacao: " + ex.toString());
         }
     }
+    
+    public void excluirPorConsulta(int codigoConsulta) {
+        try (PreparedStatement ps = conn.prepareStatement("DELETE FROM tblMedicacao WHERE codigo_consulta = ?")){
+
+            ps.setInt(1, codigoConsulta);
+            ps.execute();
+        } catch (SQLException ex) {
+            System.out.println("Erro ao excluir medicacao: " + ex.toString());
+        }
+    }
 
     public ArrayList<Medicacao> listar() {
         ArrayList<Medicacao> lista = new ArrayList<>();
