@@ -35,14 +35,12 @@ public class DaoConsulta {
         }
     }
 
-    public void alterar(Consulta consulta, Paciente paciente) {
-
-        try (PreparedStatement ps = conn.prepareStatement("UPDATE tblConsulta set data = ?, valor = ?, cpf_paciente =?, cpf_medico = ? WHERE codigo = ?")) {
+    public void alterar(Consulta consulta) {
+        try {
+            PreparedStatement ps = conn.prepareStatement("UPDATE tblConsulta set data = ?, valor = ? WHERE codigo = ?");
             ps.setString(1, consulta.getData());
             ps.setDouble(2, consulta.getValor());
-            ps.setString(3, paciente.getCpf());
-            ps.setString(4, consulta.getMedico().getCpf());
-            ps.setInt(5, consulta.getCodigo());
+            ps.setInt(3, consulta.getCodigo());
 
             ps.executeUpdate();
 
@@ -54,19 +52,22 @@ public class DaoConsulta {
     public Consulta consultar(int codigo) {
         Consulta consulta = null;
 
-        try (PreparedStatement ps = conn.prepareStatement("SELECT * from tblConsulta where codigo = ?")) {
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * from tblConsulta where codigo = ?");
             ps.setInt(1, codigo);
 
-            try (ResultSet rs = ps.executeQuery()) {
+            try {
+                ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
                     consulta = new Consulta(codigo, rs.getString("data"));
 
-                    Medico medico = new DaoMedico(conn).consultar(rs.getString("cpf_medico"));
-                    Paciente paciente = new DaoPaciente(conn).consultar(rs.getString("cpf_paciente"));
+                    String cpfMedico = rs.getString("cpf_medico");
+                    String cpfPaciente = rs.getString("cpf_paciente");
 
-                    if (medico != null) {
-                        medico.addConsulta(consulta);
-                    }
+                    Medico medico = new DaoMedico(conn).consultar(cpfMedico);
+                    Paciente paciente = new DaoPaciente(conn).consultar(cpfPaciente);
+
+                    consulta.setMedico(medico);
                     consulta.setValor(rs.getDouble("valor"));
                     if (paciente != null) {
 
@@ -83,8 +84,27 @@ public class DaoConsulta {
         return consulta;
     }
 
+    public String consultarCpfDePacientePorCodigoConsulta(int codigoConsulta) {
+        String cpf = null;
+
+        try (PreparedStatement ps = conn.prepareStatement("Select cpf_paciente from tblConsulta where codigo = ?")) {
+            ps.setInt(1, codigoConsulta);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    cpf = (rs.getString("cpf_paciente"));
+                }
+            } catch (SQLException ex) {
+                System.out.println("Erro ao buscar cpf de paciente: " + ex.getMessage());
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erro ao buscar cpf de paciente: " + ex.getMessage());
+        }
+        return cpf;
+    }
+
     public void excluir(int codigoConsulta) {
-        try (PreparedStatement ps = conn.prepareStatement("DELETE FROM tblConsulta where codigo = ? ")) {
+        try (PreparedStatement ps = conn.prepareStatement("DELETE FROM tblConsulta where codigo = ?")) {
             ps.setInt(1, codigoConsulta);
 
             ps.execute();

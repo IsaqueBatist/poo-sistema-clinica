@@ -20,6 +20,10 @@ public class Pessoa {
     public String getCpf() {
         return this.cpf;
     }
+    
+    public void setNome(String nome){
+        this.nome = nome;
+    }
 
     public String getNome() {
         return this.nome;
@@ -40,6 +44,8 @@ public class Pessoa {
     public String getTelefone() {
         return this.telefone;
     }
+    
+    
     
     public static boolean validarCPF(String cpf){
         int soma = 0;

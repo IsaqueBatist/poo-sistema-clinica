@@ -26,7 +26,7 @@ public class DaoExame {
             ps.setInt(6, exame.getConsulta().getCodigo());
 
             ps.execute();
-
+            ps.close();
         } catch (SQLException ex) {
             System.out.println("Erro ao inserir exame: " + ex.toString());
         }
@@ -39,7 +39,11 @@ public class DaoExame {
             ps.setString(2, exame.getData());
             ps.setString(3, exame.getHorario());
             ps.setDouble(4, exame.getValor());
-            ps.setInt(5, exame.getCodigo());
+            ps.setInt(5, exame.getConsulta().getCodigo());
+            ps.setInt(6, exame.getCodigo());
+
+            ps.execute();
+            ps.close();
 
             ps.execute();
         } catch (SQLException ex) {
@@ -80,13 +84,26 @@ public class DaoExame {
     }
 
     public void excluir(Exame exame) {
-
-        try (PreparedStatement ps = conn.prepareStatement("DELETE FROM tblExame WHERE codigo = ?")) {
+        try {
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM tblExame WHERE codigo = ?");
             ps.setInt(1, exame.getCodigo());
-            
+
             ps.execute();
+            ps.close();
+
         } catch (SQLException ex) {
             System.out.println("Erro ao excluir exame: " + ex.toString());
+        }
+    }
+
+    public void excluirPorConsulta(int codigoConsulta) {
+
+        try (PreparedStatement ps = conn.prepareStatement("DELETE FROM tblExame WHERE codigo_consulta = ?")) {
+            ps.setInt(1, codigoConsulta);
+
+            ps.execute();
+        } catch (SQLException ex) {
+            System.out.println("Erro ao excluir por consulta exame: " + ex.toString());
         }
     }
 }

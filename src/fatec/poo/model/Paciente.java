@@ -50,6 +50,12 @@ public class Paciente extends Pessoa {
     public void setPeso(double peso){
         this.peso = peso;
     }
+    
+    public void setDataNascimento(String data){
+        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate dataFormatada = LocalDate.parse(data, formatador);
+        this.dataNascimento = dataFormatada;
+    }
 
     
     public double calcIMC(){
@@ -63,7 +69,7 @@ public class Paciente extends Pessoa {
     public void addConsulta(Consulta consulta){
         this.consultas.add(consulta);
     }
-    
+
     public ArrayList<Consulta> getConsultas(){
         return this.consultas;
     }
