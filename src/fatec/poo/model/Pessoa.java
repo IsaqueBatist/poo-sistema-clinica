@@ -50,6 +50,8 @@ public class Pessoa {
         return this.telefone;
     }
     
+    
+    
     public static boolean validarCPF(String cpf){
         int soma = 0;
         int totaisIguais = 0;

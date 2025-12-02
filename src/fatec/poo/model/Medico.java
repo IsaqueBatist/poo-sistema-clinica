@@ -31,6 +31,7 @@ public class Medico extends Pessoa {
         this.especialidade = especialidade;
     }
 
+
     public String getEspecialidade() {
         return this.especialidade;
     }
