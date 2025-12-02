@@ -70,8 +70,8 @@ public class DaoPaciente {
                 if (rs.next()) {
                     paciente = new Paciente(cpf, rs.getString("nome"), LocalDate.parse(rs.getString("data_nascimento"), formatador));
 
-                    paciente.setEndereco("endereco");
-                    paciente.setTelefone("telefone");
+                    paciente.setEndereco(rs.getString("endereco"));
+                    paciente.setTelefone(rs.getString("telefone"));
                     paciente.setAltura(rs.getDouble("altura"));
                     paciente.setPeso(rs.getDouble("peso"));
                 }
