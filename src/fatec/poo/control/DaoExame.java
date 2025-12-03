@@ -39,11 +39,7 @@ public class DaoExame {
             ps.setString(2, exame.getData());
             ps.setString(3, exame.getHorario());
             ps.setDouble(4, exame.getValor());
-            ps.setInt(5, exame.getConsulta().getCodigo());
-            ps.setInt(6, exame.getCodigo());
-
-            ps.execute();
-            ps.close();
+            ps.setInt(5, exame.getCodigo());
 
             ps.execute();
         } catch (SQLException ex) {
@@ -84,13 +80,10 @@ public class DaoExame {
     }
 
     public void excluir(Exame exame) {
-        try {
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM tblExame WHERE codigo = ?");
+        try (PreparedStatement ps = conn.prepareStatement("DELETE FROM tblExame WHERE codigo = ?")){
             ps.setInt(1, exame.getCodigo());
 
             ps.execute();
-            ps.close();
-
         } catch (SQLException ex) {
             System.out.println("Erro ao excluir exame: " + ex.toString());
         }

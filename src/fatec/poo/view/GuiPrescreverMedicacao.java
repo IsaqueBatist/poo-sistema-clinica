@@ -232,11 +232,12 @@ public class GuiPrescreverMedicacao extends javax.swing.JFrame {
             this.lblNomeMedico.setText(consulta.getMedico().getNome());
             this.preencherFormulario();
             this.habilitarAtualizar();
+            
+            this.txtDosagem.requestFocus();
         }
         
         
-        this.txtNome.setEnabled(false);
-        this.txtDosagem.requestFocus();
+        this.txtNome.setEnabled(false); 
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
@@ -279,7 +280,7 @@ public class GuiPrescreverMedicacao extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.prepConn = new PreparaConexao("", "");
         this.prepConn.setDriver("net.ucanaccess.jdbc.UcanaccessDriver");
-        this.prepConn.setConnectionString("jdbc:ucanaccess://C:\\Users\\isaqu\\Desktop\\codes\\ProgBanco\\NeteBeansProjects\\prjPOOBeatrizIsaqueVictor\\prjPOO\\src\\fatec\\poo\\basededados\\DBClinica.accdb");
+        this.prepConn.setConnectionString("jdbc:ucanaccess://C:\\Users\\Beatriz Camargo\\Documents\\NetBeansProjects\\poo-sistema-clinica\\src\\fatec\\poo\\basededados\\DBClinica.accdb");
 
         Connection conn = this.prepConn.abrirConexao();
         this.daoMedicacao = new DaoMedicacao(conn);
@@ -374,6 +375,7 @@ public class GuiPrescreverMedicacao extends javax.swing.JFrame {
     
     private void habilitarCampoConsulta(){
         this.txtCodigoConsulta.setEnabled(true);
+        this.txtCodigoConsulta.requestFocus();
         this.btnConsultarCodigoConsulta.setEnabled(true);
     }
     

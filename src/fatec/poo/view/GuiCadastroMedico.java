@@ -226,6 +226,7 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
@@ -264,13 +265,12 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         this.dispose();
-        this.prepConn.fecharConexao();
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.prepConn = new PreparaConexao("", "");
         this.prepConn.setDriver("net.ucanaccess.jdbc.UcanaccessDriver");
-        this.prepConn.setConnectionString("jdbc:ucanaccess://C:\\Users\\isaqu\\Desktop\\codes\\ProgBanco\\NeteBeansProjects\\prjPOOBeatrizIsaqueVictor\\prjPOO\\src\\fatec\\poo\\basededados\\DBClinica.accdb");
+        this.prepConn.setConnectionString("jdbc:ucanaccess://C:\\Users\\Beatriz Camargo\\Documents\\NetBeansProjects\\poo-sistema-clinica\\src\\fatec\\poo\\basededados\\DBClinica.accdb");
         this.daoMedico = new DaoMedico(this.prepConn.abrirConexao());  
     }//GEN-LAST:event_formWindowOpened
 
