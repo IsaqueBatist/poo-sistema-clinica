@@ -249,6 +249,8 @@ public class GuiPrescreverMedicacao extends javax.swing.JFrame {
         
         this.pegarValoresFormulario();
         
+        consulta.addMedicacao(medicacao);
+        
         this.daoMedicacao.inserir(medicacao, consulta.getCodigo());
         
         this.resetarFormulario();
@@ -268,6 +270,7 @@ public class GuiPrescreverMedicacao extends javax.swing.JFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         if(JOptionPane.showConfirmDialog(null, "Confirmar exclusão?", "Exclusão", JOptionPane.YES_NO_OPTION) == 0){
+            consulta.removeMedicacao(medicacao);
             this.daoMedicacao.excluir(medicacao.getNome());
             this.resetarFormulario();
         }

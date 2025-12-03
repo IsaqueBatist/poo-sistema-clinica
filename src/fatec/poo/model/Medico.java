@@ -40,6 +40,10 @@ public class Medico extends Pessoa {
         this.consultas.add(consulta);
         consulta.setMedico(this);
     }
+    
+    public void removeConsulta(Consulta consulta){
+        this.consultas.remove(consulta);
+    }
 
     public ArrayList<Consulta> getConsultas() {
         return this.consultas;

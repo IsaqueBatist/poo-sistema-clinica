@@ -352,8 +352,9 @@ public class GuiMarcarConsulta extends javax.swing.JFrame {
             exibirMensagemErro("O valor do campo 'valor' tem que ser um número!");
             return;
         }
-
-        consulta.setMedico(medico);
+        
+        paciente.addConsulta(consulta);
+        medico.addConsulta(consulta);
 
         daoConsulta.inserir(consulta, paciente);
 
@@ -418,6 +419,9 @@ public class GuiMarcarConsulta extends javax.swing.JFrame {
         if (JOptionPane.showConfirmDialog(null, "Confirmar exclusão?", "Exclusão", JOptionPane.YES_NO_OPTION) == 0) {
             daoExame.excluirPorConsulta(consulta.getCodigo());
             daoMedicacao.excluirPorConsulta(consulta.getCodigo());
+
+            paciente.removeConsulta(consulta);
+            
             daoConsulta.excluir(consulta.getCodigo());
 
             limpar();
@@ -432,6 +436,9 @@ public class GuiMarcarConsulta extends javax.swing.JFrame {
 
             consulta.setData(ftxtData.getText());
             consulta.setValor(formatarValor());
+            
+            medico.addConsulta(consulta);
+            paciente.addConsulta(consulta);
 
             daoConsulta.alterar(consulta);
 

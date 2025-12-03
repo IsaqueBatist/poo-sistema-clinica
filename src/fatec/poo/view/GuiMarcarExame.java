@@ -10,15 +10,12 @@ import fatec.poo.control.DaoExame;
 import fatec.poo.control.PreparaConexao;
 import fatec.poo.model.Consulta;
 import fatec.poo.model.Exame;
-import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.sql.Connection;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -380,7 +377,7 @@ public class GuiMarcarExame extends javax.swing.JFrame {
         consulta = daoConsulta.consultar(codigoConsulta);
 
         if (consulta != null) {
-            exame.setConsulta(consulta);
+            consulta.addExame(exame);
             exame.setData(txtData.getText());
             exame.setValor(formatarValor());
             exame.setHorario(txtHorario.getText());
@@ -399,6 +396,7 @@ public class GuiMarcarExame extends javax.swing.JFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         if (JOptionPane.showConfirmDialog(null, "Confirmar exclusão?", "Exclusão", JOptionPane.YES_NO_OPTION) == 0) {
+            consulta.removeExame(exame);
             daoExame.excluir(exame);
         }
 
@@ -414,6 +412,8 @@ public class GuiMarcarExame extends javax.swing.JFrame {
             exame.setData(txtData.getText());
             exame.setHorario(txtHorario.getText());
             exame.setValor(formatarValor());
+            
+            consulta.addExame(exame);
 
             daoExame.alterar(exame);
 
