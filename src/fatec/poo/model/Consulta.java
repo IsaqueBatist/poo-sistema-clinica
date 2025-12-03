@@ -52,6 +52,10 @@ public class Consulta {
     public void addMedicacao(Medicacao medicacao){
         this.medicacoes.add(medicacao);
     }
+    
+    public void removeMedicacao(Medicacao medicacao){
+        this.medicacoes.remove(medicacao);
+    }
 
     public ArrayList<Medicacao> getMedicacoes() {
         return medicacoes;
@@ -60,6 +64,10 @@ public class Consulta {
     public void addExame(Exame exame){
         this.exames.add(exame);
         exame.setConsulta(this);
+    }
+    
+    public void removeExame(Exame exame){
+        this.exames.remove(exame);
     }
     
     public ArrayList<Exame> getExames(){
