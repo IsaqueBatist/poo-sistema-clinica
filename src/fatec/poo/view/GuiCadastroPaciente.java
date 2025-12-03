@@ -284,7 +284,7 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.prepConn = new PreparaConexao("", "");
         this.prepConn.setDriver("net.ucanaccess.jdbc.UcanaccessDriver");
-        this.prepConn.setConnectionString("jdbc:ucanaccess://C:\\Users\\isaqu\\Desktop\\codes\\ProgBanco\\NeteBeansProjects\\prjPOOBeatrizIsaqueVictor\\prjPOO\\src\\fatec\\poo\\basededados\\DBClinica.accdb");
+        this.prepConn.setConnectionString("jdbc:ucanaccess://C:\\Users\\Beatriz Camargo\\Documents\\NetBeansProjects\\poo-sistema-clinica\\src\\fatec\\poo\\basededados\\DBClinica.accdb");
         this.daoPaciente = new DaoPaciente(this.prepConn.abrirConexao()); 
     }//GEN-LAST:event_formWindowOpened
 
@@ -490,7 +490,7 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
         this.btnExcluir.setEnabled(false);
         this.ftxtCpf.setEnabled(true);
         
-        
+        ftxtCpf.requestFocus();
     }
     
 }

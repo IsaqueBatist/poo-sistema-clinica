@@ -14,6 +14,11 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.sql.Connection;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -256,7 +261,7 @@ public class GuiMarcarExame extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         preparaConexao = new PreparaConexao("", ""); //Usuário e senha                            
         preparaConexao.setDriver("net.ucanaccess.jdbc.UcanaccessDriver");
-        preparaConexao.setConnectionString("jdbc:ucanaccess://C:\\Users\\isaqu\\Desktop\\codes\\ProgBanco\\NeteBeansProjects\\prjPOOBeatrizIsaqueVictor\\prjPOO\\src\\fatec\\poo\\basededados\\DBClinica.accdb");
+        preparaConexao.setConnectionString("jdbc:ucanaccess://C:\\Users\\Beatriz Camargo\\Documents\\NetBeansProjects\\poo-sistema-clinica\\src\\fatec\\poo\\basededados\\DBClinica.accdb");
 
         Connection conexao = preparaConexao.abrirConexao();
 
@@ -360,18 +365,18 @@ public class GuiMarcarExame extends javax.swing.JFrame {
         if (!isValidoTodosOsCamposObrigatorios()) {
             return;
         }
-        
+
         int codigoConsulta = 0;
-        
-        try{
+
+        try {
             codigoConsulta = Integer.parseInt(txtCodigoConsulta.getText());
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "O campo código consulta só aceita números. Verifique os dados inseridos.");
 
             txtCodigo.requestFocus();
             return;
         }
-        
+
         consulta = daoConsulta.consultar(codigoConsulta);
 
         if (consulta != null) {
@@ -404,7 +409,7 @@ public class GuiMarcarExame extends javax.swing.JFrame {
         if (!isValidoTodosOsCamposObrigatorios()) {
             return;
         }
-        if(JOptionPane.showConfirmDialog(null, "Confirma Alteração?") == 0){
+        if (JOptionPane.showConfirmDialog(null, "Confirma Alteração?") == 0) {
             exame.setDescricao(txtDescricao.getText());
             exame.setData(txtData.getText());
             exame.setHorario(txtHorario.getText());
@@ -414,7 +419,7 @@ public class GuiMarcarExame extends javax.swing.JFrame {
 
             resetarFormulario();
         }
-        
+
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void resetarFormulario() {
@@ -425,21 +430,34 @@ public class GuiMarcarExame extends javax.swing.JFrame {
         txtValor.setText(null);
         txtHorario.setText(null);
         txtData.setText(null);
-        
+
         txtCodigo.setEnabled(true);
         txtCodigoConsulta.setEnabled(false);
         txtDescricao.setEnabled(false);
         txtData.setEnabled(false);
         txtValor.setEnabled(false);
         txtHorario.setEnabled(false);
-        
+
         btnConsultar.setEnabled(true);
         btnAlterar.setEnabled(false);
         btnExcluir.setEnabled(false);
     }
 
     private boolean isCampoObrigatorioValido(JTextField campo, String nomeCampo) {
-        if (campo.getText().trim().isEmpty()) {
+        
+        String textoDoCampo = campo.getText();
+
+        String textoSemMascara;
+
+        if (nomeCampo.contains("Data")) {
+            textoSemMascara = textoDoCampo.replace("/", "");
+        } else {
+            textoSemMascara = textoDoCampo;
+        }
+        
+        textoSemMascara = textoSemMascara.trim();
+
+        if (textoSemMascara.isEmpty()) {
             JOptionPane.showMessageDialog(
                     null,
                     "O campo " + nomeCampo + " é obrigatório! Por favor, preencha-o.",
@@ -457,14 +475,26 @@ public class GuiMarcarExame extends javax.swing.JFrame {
     private boolean isValidoTodosOsCamposObrigatorios() {
         return (isCampoObrigatorioValido(txtCodigoConsulta, "Código Consulta")
                 && isCampoObrigatorioValido(txtDescricao, "Descrição")
-                && isCampoObrigatorioValido(txtHorario, "Horário")
-                && isCampoObrigatorioValido(txtData, "Data"));
+                && isCampoObrigatorioValido(txtData, "Data")
+                && isCampoObrigatorioValido(txtHorario, "Horário"));
     }
 
     private double formatarValor() {
-        return Double.parseDouble(txtValor.getText().replace(",", "."));
+        String textoValor = txtValor.getText();
+        
+        NumberFormat formatador = NumberFormat.getInstance(new Locale("pt", "BR"));
+
+        Number numero;
+        try {
+            numero = formatador.parse(textoValor);
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(null, "O campo valor só aceita números. Verifique os dados inseridos.");
+            return 0.00;
+        }
+
+        return numero.doubleValue();
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnConsultar;

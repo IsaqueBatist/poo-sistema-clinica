@@ -11,6 +11,9 @@ import fatec.poo.model.Medico;
 import fatec.poo.model.Paciente;
 import fatec.poo.model.Pessoa;
 import java.sql.Connection;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -321,7 +324,7 @@ public class GuiMarcarConsulta extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.prepConn = new PreparaConexao("", "");
         this.prepConn.setDriver("net.ucanaccess.jdbc.UcanaccessDriver");
-        this.prepConn.setConnectionString("jdbc:ucanaccess://C:\\Users\\isaqu\\Desktop\\codes\\ProgBanco\\NeteBeansProjects\\prjPOOBeatrizIsaqueVictor\\prjPOO\\src\\fatec\\poo\\basededados\\DBClinica.accdb");
+        this.prepConn.setConnectionString("jdbc:ucanaccess://C:\\Users\\Beatriz Camargo\\Documents\\NetBeansProjects\\poo-sistema-clinica\\src\\fatec\\poo\\basededados\\DBClinica.accdb");
 
         Connection conn = this.prepConn.abrirConexao();
 
@@ -412,10 +415,11 @@ public class GuiMarcarConsulta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        if(JOptionPane.showConfirmDialog(null, "Confirmar exclusão?", "Exclusão", JOptionPane.YES_NO_OPTION) == 0){
+        if (JOptionPane.showConfirmDialog(null, "Confirmar exclusão?", "Exclusão", JOptionPane.YES_NO_OPTION) == 0) {
             daoExame.excluirPorConsulta(consulta.getCodigo());
             daoMedicacao.excluirPorConsulta(consulta.getCodigo());
             daoConsulta.excluir(consulta.getCodigo());
+
             limpar();
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -465,8 +469,21 @@ public class GuiMarcarConsulta extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, mensagem, "Erro", JOptionPane.ERROR_MESSAGE);
     }
 
-    private Double formatarValor() {
-        return Double.parseDouble(ftxtValor.getText().trim().replace(",", "."));
+    private double formatarValor() {
+        String textoValor = ftxtValor.getText();
+
+        NumberFormat formatador = NumberFormat.getInstance(new Locale("pt", "BR"));
+
+        Number numero;
+        try {
+            numero = formatador.parse(textoValor);
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(null, "O campo valor só aceita números. Verifique os dados inseridos.");
+            return 0.00;
+        }
+
+        return numero.doubleValue();
+
     }
 
     private String formatarCpf(String cpf) {
@@ -498,17 +515,19 @@ public class GuiMarcarConsulta extends javax.swing.JFrame {
 
     private boolean isCampoObrigatorioValido(JTextField campo, String nomeCampo) {
 
-        String textoDoCampo = campo.getText().trim();
+        String textoDoCampo = campo.getText();
 
         String textoSemMascara;
 
         if (nomeCampo.contains("CPF")) {
             textoSemMascara = formatarCpf(textoDoCampo);
-        } else if (nomeCampo.contains("Data")){
+        } else if (nomeCampo.equals("Data")) {
             textoSemMascara = textoDoCampo.replace("/", "");
-        }else {
+        } else {
             textoSemMascara = textoDoCampo;
         }
+        
+        textoSemMascara = textoSemMascara.trim();
 
         if (textoSemMascara.isEmpty()) {
             JOptionPane.showMessageDialog(
