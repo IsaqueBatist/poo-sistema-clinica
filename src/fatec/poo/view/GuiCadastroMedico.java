@@ -63,7 +63,7 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
             }
         });
 
-        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/rem.png"))); // NOI18N
+        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/add.png"))); // NOI18N
         btnInserir.setText("Inserir");
         btnInserir.setEnabled(false);
         btnInserir.addActionListener(new java.awt.event.ActionListener() {
@@ -248,14 +248,18 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         if(!this.isValidoTodosOsCamposObrigatorios()) return;
-        this.pegarDadosMedicoAtualizado();
-        this.daoMedico.alterar(this.medico);
-        this.resetartela();
+        if(JOptionPane.showConfirmDialog(null, "Confirma Alteração?") == 0){
+            this.pegarDadosMedicoAtualizado();
+            this.daoMedico.alterar(this.medico);
+            this.resetartela();
+        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        this.daoMedico.excluir(this.medico);
-        this.resetartela();
+        if(JOptionPane.showConfirmDialog(null, "Confirmar exclusão?", "Exclusão", JOptionPane.YES_NO_OPTION) == 0){
+            this.daoMedico.excluir(this.medico);
+            this.resetartela();
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed

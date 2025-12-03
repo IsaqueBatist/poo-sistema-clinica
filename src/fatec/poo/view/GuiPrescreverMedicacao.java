@@ -86,7 +86,7 @@ public class GuiPrescreverMedicacao extends javax.swing.JFrame {
             }
         });
 
-        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/rem.png"))); // NOI18N
+        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/add.png"))); // NOI18N
         btnInserir.setText("Inserir");
         btnInserir.setEnabled(false);
         btnInserir.addActionListener(new java.awt.event.ActionListener() {
@@ -236,6 +236,7 @@ public class GuiPrescreverMedicacao extends javax.swing.JFrame {
         
         
         this.txtNome.setEnabled(false);
+        this.txtDosagem.requestFocus();
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
@@ -257,14 +258,18 @@ public class GuiPrescreverMedicacao extends javax.swing.JFrame {
         if(!this.isValidoTodosOsCamposObrigatorios()){
             return;
         }
-        this.pegarValoresFormulario();
-        this.daoMedicacao.alterar(medicacao);
-        this.resetarFormulario();
+        if(JOptionPane.showConfirmDialog(null, "Confirma Alteração?") == 0){
+            this.pegarValoresFormulario();
+            this.daoMedicacao.alterar(medicacao);
+            this.resetarFormulario();
+        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        this.daoMedicacao.excluir(medicacao.getNome());
-        this.resetarFormulario();
+        if(JOptionPane.showConfirmDialog(null, "Confirmar exclusão?", "Exclusão", JOptionPane.YES_NO_OPTION) == 0){
+            this.daoMedicacao.excluir(medicacao.getNome());
+            this.resetarFormulario();
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed

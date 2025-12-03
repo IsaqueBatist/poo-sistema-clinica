@@ -5,14 +5,6 @@
  */
 package fatec.poo.view;
 
-import fatec.poo.control.DaoConsulta;
-import fatec.poo.control.DaoExame;
-import fatec.poo.control.DaoMedicacao;
-import fatec.poo.control.DaoMedico;
-import fatec.poo.control.DaoPaciente;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -47,7 +39,7 @@ public class GuiMenu extends javax.swing.JFrame {
         jMenuItemPrescreverMedicacao = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Clinica POO");
+        setTitle("Clinica Poo");
 
         jMenuCadastro.setText("Cadastro");
 
@@ -95,7 +87,7 @@ public class GuiMenu extends javax.swing.JFrame {
         });
         jMenuRegistro.add(jMenuItemMarcarExame);
 
-        jMenuItemPrescreverMedicacao.setText("Prescrever Medicacao");
+        jMenuItemPrescreverMedicacao.setText("Prescrever Medicação");
         jMenuItemPrescreverMedicacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemPrescreverMedicacaoActionPerformed(evt);
@@ -119,11 +111,11 @@ public class GuiMenu extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItemMarcarExameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMarcarExameActionPerformed
        new GuiMarcarExame().setVisible(true);
-      
     }//GEN-LAST:event_jMenuItemMarcarExameActionPerformed
 
     private void jMenuItemMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMedicoActionPerformed
@@ -144,8 +136,8 @@ public class GuiMenu extends javax.swing.JFrame {
 
     private void jMenuItemPrescreverMedicacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPrescreverMedicacaoActionPerformed
         new GuiPrescreverMedicacao().setVisible(true);
-
     }//GEN-LAST:event_jMenuItemPrescreverMedicacaoActionPerformed
+
 
     /**
      * @param args the command line arguments

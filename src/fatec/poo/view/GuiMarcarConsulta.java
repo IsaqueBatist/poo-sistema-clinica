@@ -91,7 +91,11 @@ public class GuiMarcarConsulta extends javax.swing.JFrame {
         }
         ftxtCpfPaciente.setEnabled(false);
 
-        ftxtData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        try {
+            ftxtData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         ftxtData.setEnabled(false);
 
         ftxtValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
@@ -125,7 +129,7 @@ public class GuiMarcarConsulta extends javax.swing.JFrame {
             }
         });
 
-        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/rem.png"))); // NOI18N
+        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/add.png"))); // NOI18N
         btnInserir.setText("Inserir");
         btnInserir.setEnabled(false);
         btnInserir.addActionListener(new java.awt.event.ActionListener() {
@@ -269,6 +273,7 @@ public class GuiMarcarConsulta extends javax.swing.JFrame {
             codigoConsulta = Integer.parseInt(this.txtCodigo.getText());
         } catch (NumberFormatException nfe) {
             this.exibirMensagemErro("Erro! é necessário fornecer o código da consulta");
+            return;
         }
 
         consulta = this.daoConsulta.consultar(codigoConsulta);
@@ -316,7 +321,7 @@ public class GuiMarcarConsulta extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.prepConn = new PreparaConexao("", "");
         this.prepConn.setDriver("net.ucanaccess.jdbc.UcanaccessDriver");
-        this.prepConn.setConnectionString("jdbc:ucanaccess://C:\\Users\\Beatriz Camargo\\Documents\\NetBeansProjects\\poo-sistema-clinica\\src\\fatec\\poo\\basededados\\DBClinica.accdb");
+        this.prepConn.setConnectionString("jdbc:ucanaccess://C:\\Users\\isaqu\\Desktop\\codes\\ProgBanco\\NeteBeansProjects\\prjPOOBeatrizIsaqueVictor\\prjPOO\\src\\fatec\\poo\\basededados\\DBClinica.accdb");
 
         Connection conn = this.prepConn.abrirConexao();
 
@@ -407,11 +412,12 @@ public class GuiMarcarConsulta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        daoExame.excluirPorConsulta(consulta.getCodigo());
-        daoMedicacao.excluirPorConsulta(consulta.getCodigo());
-        daoConsulta.excluir(consulta.getCodigo());
-
-        limpar();
+        if(JOptionPane.showConfirmDialog(null, "Confirmar exclusão?", "Exclusão", JOptionPane.YES_NO_OPTION) == 0){
+            daoExame.excluirPorConsulta(consulta.getCodigo());
+            daoMedicacao.excluirPorConsulta(consulta.getCodigo());
+            daoConsulta.excluir(consulta.getCodigo());
+            limpar();
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
@@ -498,7 +504,9 @@ public class GuiMarcarConsulta extends javax.swing.JFrame {
 
         if (nomeCampo.contains("CPF")) {
             textoSemMascara = formatarCpf(textoDoCampo);
-        } else {
+        } else if (nomeCampo.contains("Data")){
+            textoSemMascara = textoDoCampo.replace("/", "");
+        }else {
             textoSemMascara = textoDoCampo;
         }
 

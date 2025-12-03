@@ -256,7 +256,7 @@ public class GuiMarcarExame extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         preparaConexao = new PreparaConexao("", ""); //Usuário e senha                            
         preparaConexao.setDriver("net.ucanaccess.jdbc.UcanaccessDriver");
-        preparaConexao.setConnectionString("jdbc:ucanaccess://C:\\Users\\Beatriz Camargo\\Documents\\NetBeansProjects\\poo-sistema-clinica\\src\\fatec\\poo\\basededados\\DBClinica.accdb");
+        preparaConexao.setConnectionString("jdbc:ucanaccess://C:\\Users\\isaqu\\Desktop\\codes\\ProgBanco\\NeteBeansProjects\\prjPOOBeatrizIsaqueVictor\\prjPOO\\src\\fatec\\poo\\basededados\\DBClinica.accdb");
 
         Connection conexao = preparaConexao.abrirConexao();
 
@@ -404,15 +404,17 @@ public class GuiMarcarExame extends javax.swing.JFrame {
         if (!isValidoTodosOsCamposObrigatorios()) {
             return;
         }
+        if(JOptionPane.showConfirmDialog(null, "Confirma Alteração?") == 0){
+            exame.setDescricao(txtDescricao.getText());
+            exame.setData(txtData.getText());
+            exame.setHorario(txtHorario.getText());
+            exame.setValor(formatarValor());
+
+            daoExame.alterar(exame);
+
+            resetarFormulario();
+        }
         
-        exame.setDescricao(txtDescricao.getText());
-        exame.setData(txtData.getText());
-        exame.setHorario(txtHorario.getText());
-        exame.setValor(formatarValor());
-
-        daoExame.alterar(exame);
-
-        resetarFormulario();
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void resetarFormulario() {

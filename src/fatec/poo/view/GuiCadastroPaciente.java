@@ -106,7 +106,7 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
             }
         });
 
-        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/rem.png"))); // NOI18N
+        btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/add.png"))); // NOI18N
         btnInserir.setText("Inserir");
         btnInserir.setEnabled(false);
         btnInserir.addActionListener(new java.awt.event.ActionListener() {
@@ -270,6 +270,7 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
         
         if(this.paciente == null){
             this.alterarBotoesAoCriar();
+            this.paciente = new Paciente(cpfPaciente, "", LocalDate.now());
         }else{
             this.alterarBotoesAoAtualizar();
             this.preencherDadosPaciente(this.paciente);
@@ -291,7 +292,7 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
         txtTelefone.setText(this.retirarMascaraTelefone(txtTelefone.getText()));
         ftxtDataNascimento.setText(ftxtDataNascimento.getText().replace("/", ""));
         
-        if(this.isValidoTodosOsCamposObrigatorios()){
+        if(!this.isValidoTodosOsCamposObrigatorios()){
            return;
         }
         String alturaInput = txtAltura.getText().replace(",", ".");
@@ -314,19 +315,22 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         if(!this.isValidoTodosOsCamposObrigatorios()) return;
-        this.pegarDadosPacienteAtualizado();
-        this.daoPaciente.alterar(this.paciente);
-        this.resetartela();
+        if(JOptionPane.showConfirmDialog(null, "Confirma Alteração?") == 0){
+            this.pegarDadosPacienteAtualizado();
+            this.daoPaciente.alterar(this.paciente);
+            this.resetartela();
+        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        this.daoPaciente.excluir(this.paciente);
-        this.resetartela();
+        if(JOptionPane.showConfirmDialog(null, "Confirmar exclusão?", "Exclusão", JOptionPane.YES_NO_OPTION) == 0){
+            this.daoPaciente.excluir(this.paciente);
+            this.resetartela();
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         this.dispose();
-        this.prepConn.fecharConexao();
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
